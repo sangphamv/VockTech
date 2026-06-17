@@ -1,0 +1,89 @@
+---
+import cx from "classnames";
+
+import { Image, Picture } from "astro:assets";
+import Label from "@/components/ui/label.astro";
+import type { Author } from "@/data/authors";
+import { authors } from "@/data/authors";
+import { getFormattedDate } from "@/utils/all";
+import { Icon } from "astro-icon/components";
+import { getCollection } from "astro:content";
+
+const { post, aspect, preloadImage } = Astro.props;
+const author = authors.find((item) => item.slug === post.data.author) as Author;
+const allCategories = await getCollection("categories");
+const categoryDoc = allCategories.find((item) => item.id === post.data.category);
+const category = categoryDoc ? { slug: categoryDoc.id, ...categoryDoc.data } : null;
+
+const slug = post.id.replace(/\.(md|mdx)$/, '');
+const TitleTag = aspect === "landscape" ? "h2" : "h3";
+---
+
+<div class="cursor-pointer group">
+  <div
+    class={cx(
+      "relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800   hover:scale-105",
+      "aspect-video"
+    )}>
+    <a href={"/category/" + post.data.category + "/" + slug}>
+      {
+        post.data.image ? (
+          <Picture
+            src={post.data.image}
+            widths={[200, 400, 800]}
+            sizes="(max-width: 640px) 90vw, 480px"
+            formats={["avif"]}
+            fallbackFormat="avif"
+            alt={`Hình ảnh nổi bật cho bài viết: ${post.data.title}`}
+            loading={preloadImage ? "eager" : "lazy"}
+            fetchpriority={preloadImage ? "high" : "auto"}
+            class="w-full h-full object-cover rounded-md"
+          />
+        ) : (
+          <span class="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            <Icon
+              class="w-4 h-4 text-black"
+              name="heroicons:photo"
+            />
+          </span>
+        )
+      }
+    </a>
+  </div>
+
+  {category && (
+    <a href={"/category/" + category.slug}>
+      <Label theme={category.color}>{category.title}</Label>
+    </a>
+  )}
+  <TitleTag
+    class="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
+    <a href={"/category/" + post.data.category + "/" + slug}>
+      <span
+        class="bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
+        {post.data.title}
+      </span>
+    </a>
+  </TitleTag>
+
+  <div class="hidden">
+    {
+      post.data.excerpt && (
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-3">
+          <a href={"/category/" + post.data.category + "/" + slug}>{post.data.excerpt}</a>
+        </p>
+      )
+    }
+  </div>
+
+  <div
+    class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
+    <div class="flex items-center gap-3">
+      <span class="text-sm">{author.name}</span>
+    </div>
+    <span class="text-xs text-gray-300 dark:text-gray-600"> &bull;</span>
+    <time class="text-sm" datetime={post.data.publishDate.toISOString()}>
+      {getFormattedDate(post.data.publishDate)}
+    </time>
+  </div>
+</div>

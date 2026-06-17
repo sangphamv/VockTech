@@ -1,0 +1,31 @@
+---
+const { page } = Astro.props;
+---
+
+{(page.url.prev || page.url.next) && (
+  <div class="flex items-center justify-center mt-16 space-x-8">
+    {page.url.prev ? (
+      <a href={page.url.prev} class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+        &larr; Trang trước
+      </a>
+    ) : (
+      <span class="text-sm font-medium text-gray-300 dark:text-gray-700 cursor-not-allowed">
+        &larr; Trang trước
+      </span>
+    )}
+    
+    <span class="text-sm text-gray-400 dark:text-gray-500 font-normal">
+      {page.currentPage} / {page.lastPage}
+    </span>
+    
+    {page.url.next ? (
+      <a href={page.url.next} class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+        Trang sau &rarr;
+      </a>
+    ) : (
+      <span class="text-sm font-medium text-gray-300 dark:text-gray-700 cursor-not-allowed">
+        Trang sau &rarr;
+      </span>
+    )}
+  </div>
+)}

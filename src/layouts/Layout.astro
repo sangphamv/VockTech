@@ -1,0 +1,144 @@
+---
+import { AstroFont } from "astro-font";
+import Footer from "@/components/footer.astro";
+import Navbar from "@/components/navbar.astro";
+import SEO from "@/components/SEO.astro";
+import { SITE_CONFIG } from "@/site.config";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  articleDate?: string | Date;
+
+  // Backwards compatibility (existing pages)
+  desc?: string;
+  ogimage?: string;
+}
+
+const { title, description, image, articleDate, desc, ogimage } = Astro.props;
+
+const resolvedDescription = description ?? desc;
+const resolvedImage = image ?? ogimage;
+---
+
+<!DOCTYPE html>
+<html lang={SITE_CONFIG.lang} class="scroll-smooth scroll-pt-16">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
+    <AstroFont
+      config={[
+        {
+          name: "Inter Variable",
+          src: [],
+          googleFontsURL: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+      ]}
+    />
+    <SEO
+      title={title}
+      description={resolvedDescription}
+      image={resolvedImage}
+      articleDate={articleDate}
+    />
+    <script is:inline>
+      const getTheme = () => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          const theme = localStorage.getItem("theme");
+          if (theme === "system") {
+            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          }
+          return theme;
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      };
+
+      if (getTheme() === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
+  </head>
+  <body class="antialiased text-gray-800 bg-white dark:bg-black dark:text-gray-400">
+    <Navbar />
+    <slot />
+    <Footer />
+    <style is:global>
+      /* Improve Page speed */
+      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
+      img {
+        content-visibility: auto;
+      }
+      .theme-transition,
+      .theme-transition *,
+      .theme-transition *::before,
+      .theme-transition *::after {
+        transition-property: background-color, border-color, color, fill, stroke !important;
+        transition-duration: 300ms !important;
+        transition-timing-function: ease-in-out !important;
+      }
+      .astro-code {
+        position: relative;
+      }
+      .copy-code-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+        color: #9ca3af;
+        background-color: transparent;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s, color 0.2s, background-color 0.2s;
+      }
+      .astro-code:hover .copy-code-btn {
+        opacity: 1;
+      }
+      .copy-code-btn:hover {
+        color: #f3f4f6;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    </style>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        const blocks = document.querySelectorAll("pre.astro-code");
+        blocks.forEach((block) => {
+          const button = document.createElement("button");
+          button.className = "copy-code-btn";
+          button.textContent = "Copy";
+          block.appendChild(button);
+
+          button.addEventListener("click", () => {
+            const code = block.querySelector("code")?.innerText;
+            if (code) {
+              navigator.clipboard.writeText(code).then(() => {
+                button.textContent = "Copied!";
+                setTimeout(() => {
+                  button.textContent = "Copy";
+                }, 2000);
+              });
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

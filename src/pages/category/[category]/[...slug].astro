@@ -1,0 +1,307 @@
+---
+import { Image, Picture } from "astro:assets";
+import Authorcard from "@/components/authorcard.astro";
+import Container from "@/components/container.astro";
+import Label from "@/components/ui/label.astro";
+import { authors } from "@/data/authors";
+import Layout from "@/layouts/Layout.astro";
+import TOC from "@/components/TOC.astro";
+import { getFormattedDate } from "@/utils/all";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import Postlist from "@/components/postlist.astro";
+import { latestPosts } from "@/utils/content";
+import ShareButtons from "@/components/ShareButtons.astro";
+import Giscus from "@/components/Giscus.astro";
+import Newsletter from "@/components/Newsletter.astro";
+
+import type { Author } from "@/data/authors";
+
+type Props = {
+  post: CollectionEntry<"blog">;
+};
+
+export async function getStaticPaths() {
+  const blog = await getCollection("blog");
+
+  return blog.map((post) => ({
+    params: { 
+      category: post.data.category,
+      slug: post.id.replace(/\.(md|mdx)$/, '') 
+    }, 
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+
+const { Content, headings } = await render(post);
+
+const author = authors.find((item) => item.slug === post.data.author) as Author;
+const allCategories = await getCollection("categories");
+const categoryDoc = allCategories.find((item) => item.id === post.data.category);
+const category = categoryDoc ? { slug: categoryDoc.id, ...categoryDoc.data } : { slug: '', title: '', color: 'blue', description: '' };
+
+const relatedPosts = latestPosts
+  .filter((p) => p.data.category === post.data.category && p.id !== post.id)
+  .slice(0, 3);
+
+const allPosts = await getCollection("blog");
+const seriesPosts = post.data.series
+  ? allPosts
+      .filter((p) => p.data.series === post.data.series)
+      .sort((a, b) => (a.data.seriesOrder || 0) - (b.data.seriesOrder || 0))
+  : [];
+
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.excerpt}
+  image={post.data.image.src}
+  articleDate={post.data.publishDate}>
+  <Container>
+    <div class="max-w-screen-lg mx-auto">
+      <div class="text-center">
+        <a href={"/category/" + category.slug}>
+          <Label theme={category.color as "green" | "blue" | "orange" | "purple" | "pink"}>{category.title}</Label>
+        </a>
+      </div>
+
+      <nav aria-label="Breadcrumb" class="flex justify-center mt-5 mb-2">
+        <ol class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+          <li>
+            <a href="/" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Trang chủ</a>
+          </li>
+          <li>
+            <span class="mx-0.5">/</span>
+          </li>
+          <li>
+            <a href="/category" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Danh mục</a>
+          </li>
+          <li>
+            <span class="mx-0.5">/</span>
+          </li>
+          <li>
+            <a href={`/category/${category.slug}`} class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">{category.title}</a>
+          </li>
+          <li>
+            <span class="mx-0.5">/</span>
+          </li>
+          <li class="text-gray-800 dark:text-gray-200 font-medium truncate max-w-[200px] sm:max-w-xs" aria-current="page" title={post.data.title}>
+            {post.data.title}
+          </li>
+        </ol>
+      </nav>
+
+      <h1
+        class="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
+        {post.data.title}
+      </h1>
+
+      <div class="flex justify-center mt-3 space-x-3 text-gray-500">
+        <div class="flex items-center gap-3">
+          <div class="relative flex-shrink-0">
+            {
+              author.image && (
+                <Image
+                  src={author.image as any}
+                  alt={`Ảnh đại diện tác giả ${author.name}`}
+                  width={80}
+                  height={80}
+                  format="avif"
+                  loading="lazy"
+                  decoding="async"
+                  class="rounded-full object-cover w-10 h-10"
+                />
+              )
+            }
+          </div>
+
+          <div>
+            <p class="text-gray-800 dark:text-gray-400">
+              {author.name}
+            </p>
+            <div class="flex flex-wrap items-center space-x-2 text-sm gap-y-1">
+              <time
+                class="text-gray-500 dark:text-gray-400"
+                datetime={post.data.publishDate.toISOString()}>
+                {getFormattedDate(post.data.publishDate)}
+              </time>
+              {post.data.updatedDate && post.data.updatedDate.getTime() > post.data.publishDate.getTime() && (
+                <>
+                  <span class="text-gray-400 dark:text-gray-500 hidden sm:inline">•</span>
+                  <time
+                    class="text-gray-500 dark:text-gray-400"
+                    datetime={post.data.updatedDate.toISOString()}>
+                    Cập nhật: {getFormattedDate(post.data.updatedDate)}
+                  </time>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+
+  <div
+    class="relative z-0 w-full max-w-[800px] mx-auto overflow-hidden lg:rounded-lg aspect-video">
+    {
+      post.data.image && (
+        <Picture
+          src={post.data.image}
+          widths={[200, 400, 800]}
+          sizes="(max-width: 640px) 90vw, 480px"
+          width={1024}
+          height={576}
+          formats={["avif"]}
+          fallbackFormat="avif"
+          alt={post.data.title}
+          loading="eager"
+          fetchpriority="high"
+          class="w-full h-full object-cover"
+        />
+      )
+    }
+  </div>
+
+  <Container>
+    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(auto,800px)_minmax(0,1fr)] gap-8 max-w-screen-xl mx-auto">
+      <!-- Cột trái (để trống nhằm căn giữa bài viết) -->
+      <div class="hidden xl:block"></div>
+
+      <!-- Cột giữa (bài viết) -->
+      <article class="w-full min-w-0" data-pagefind-body data-pagefind-filter={`Thể loại:${category.title}`}>
+        {post.data.image && <meta data-pagefind-meta="image[content]" content={post.data.image.src} />}
+        
+        <div class="xl:hidden my-4">
+          <TOC headings={headings.filter(h => h.depth === 2 || h.depth === 3)} isAccordion={true} />
+        </div>
+
+        <div class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-blue-600 hover:prose-a:text-blue-500 dark:prose-a:text-blue-400 dark:hover:prose-a:text-blue-300 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-none">
+          {seriesPosts.length > 0 && (
+            <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl mb-8 not-prose overflow-hidden">
+              <button 
+                onclick="
+                  const content = this.nextElementSibling;
+                  content.classList.toggle('grid-rows-[0fr]');
+                  content.classList.toggle('grid-rows-[1fr]');
+                  this.querySelector('.arrow-icon').classList.toggle('rotate-180');
+                "
+                class="w-full flex justify-between items-center font-medium text-gray-900 dark:text-gray-100 cursor-pointer p-5"
+              >
+                <span class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                  </svg>
+                  Series: {post.data.series}
+                </span>
+                <span class="arrow-icon transition-transform duration-300 rotate-180 text-gray-500 dark:text-gray-400">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </button>
+              <div class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out">
+                <div class="overflow-hidden">
+                  <div class="px-5 pb-5">
+                    <ul class="space-y-3 m-0 p-0 list-none pt-4 border-t border-gray-200 dark:border-gray-700/80">
+                {seriesPosts.map((sp, index) => (
+                  <li class="flex items-start gap-3 text-[15px]">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-gray-200/60 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 flex items-center justify-center text-sm font-medium mt-0.5">
+                      {index + 1}
+                    </span>
+                    {sp.id === post.id ? (
+                      <span class="text-gray-900 dark:text-white font-medium">
+                        {sp.data.title} <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-1">(Bài hiện tại)</span>
+                      </span>
+                    ) : (
+                      <a 
+                        href={`/category/${category.slug}/${sp.id.replace(/\.(md|mdx)$/, '')}`} 
+                        class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
+                      >
+                        {sp.data.title}
+                      </a>
+                    )}
+                  </li>
+                ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <Content />
+
+          <div class="flex flex-wrap items-center w-full gap-3 md:w-auto mt-10">
+            {
+              post.data.tags.map((tag) => (
+                <a href={`/tags/${tag}`} class="text-sm text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400">#{tag}</a>
+              ))
+            }
+          </div>
+          
+          <ShareButtons title={post.data.title} url={Astro.url.href} />
+        </div>
+
+        {author && <Authorcard author={author} />}
+        
+        <Newsletter />
+        <Giscus />
+      </article>
+
+      <!-- Cột phải (TOC) -->
+      <aside class="hidden xl:block w-full">
+        <div class="sticky top-28 w-full">
+          <TOC headings={headings.filter(h => h.depth === 2 || h.depth === 3)} />
+        </div>
+      </aside>
+    </div>
+  </Container>
+
+  {relatedPosts.length > 0 && (
+    <Container class="mt-14 pb-14">
+      <div class="border-t border-gray-100 dark:border-gray-800 pt-10">
+        <h2 class="text-2xl font-bold tracking-tight mb-8 dark:text-white text-center">
+          Bài viết liên quan
+        </h2>
+        <div class="grid gap-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+          {relatedPosts.map((relatedPost) => (
+            <Postlist post={relatedPost} aspect="square" />
+          ))}
+        </div>
+      </div>
+    </Container>
+  )}
+
+  <style is:global>
+    :root {
+      --zoom-bg: rgba(255, 255, 255, 0.95);
+    }
+    html.dark {
+      --zoom-bg: rgba(17, 24, 39, 0.95);
+    }
+    .medium-zoom-overlay {
+      z-index: 100 !important;
+    }
+    .medium-zoom-image {
+      transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), border-radius 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
+    }
+    .medium-zoom-image--opened {
+      z-index: 101 !important;
+      border-radius: 0 !important;
+    }
+  </style>
+
+  <script is:inline defer src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      const images = document.querySelectorAll('.prose img, .aspect-video img');
+      if (images.length > 0) {
+        mediumZoom(images, {
+          margin: 24,
+          background: 'var(--zoom-bg)',
+        });
+      }
+    });
+  </script>
+</Layout>

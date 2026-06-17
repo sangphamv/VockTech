@@ -1,0 +1,54 @@
+---
+import Container from "@/components/container.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import Postlist from "@/components/postlist.astro";
+import Layout from "@/layouts/Layout.astro";
+import Pagination from "@/components/Pagination.astro";
+import { getCollection } from "astro:content";
+
+import type { PaginateFunction } from "astro";
+
+export async function getStaticPaths({ paginate }: { paginate: PaginateFunction }) {
+  const allPosts = await getCollection("blog");
+  const allCategories = await getCollection("categories");
+  
+  return allCategories.flatMap((category) => {
+    const filteredPosts = allPosts
+      .filter((post) => post.data.category === category.id)
+      .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+      
+    return paginate(filteredPosts, {
+      params: { category: category.id },
+      props: { category: { slug: category.id, ...category.data } },
+      pageSize: 10,
+    });
+  });
+}
+
+const { page, category } = Astro.props;
+---
+
+<Layout title={category.title} description={category.description}>
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">{category.title}</Fragment>
+      <Fragment slot="desc">{category.description}</Fragment>
+    </Pagetitle>
+    <main>
+      {page.data.length > 0 ? (
+        <>
+          <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+            {page.data.map((post) => <Postlist post={post} aspect="square" />)}
+          </div>
+          
+          {/* Pagination Controls */}
+          <Pagination page={page} />
+        </>
+      ) : (
+        <div class="mt-10 text-center text-gray-500">
+          Chưa có bài viết nào trong thể loại này.
+        </div>
+      )}
+    </main>
+  </Container>
+</Layout>

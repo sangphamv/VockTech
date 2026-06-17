@@ -1,0 +1,136 @@
+---
+import { SEO as AstroSEO } from "astro-seo";
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  articleDate?: string | Date;
+}
+
+const { title, description, image, articleDate } = Astro.props;
+
+import { SITE_CONFIG } from "@/site.config";
+
+const SITE_NAME = SITE_CONFIG.siteName;
+const DEFAULT_TITLE = SITE_CONFIG.title;
+const DEFAULT_DESCRIPTION = SITE_CONFIG.description;
+const DEFAULT_IMAGE = "/opengraph.jpg";
+
+const siteBase = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, siteBase).toString();
+
+const pageTitle = (title ?? "").trim();
+const metaTitle = pageTitle ? `${pageTitle} | ${SITE_NAME}` : DEFAULT_TITLE;
+const metaDescription = ((description ?? "") || DEFAULT_DESCRIPTION).trim();
+
+function toAbsoluteUrl(url?: string): string | undefined {
+  if (!url) return undefined;
+  try {
+    return new URL(url).toString();
+  } catch {
+    return new URL(url, siteBase).toString();
+  }
+}
+
+const ogImage = toAbsoluteUrl(image ?? DEFAULT_IMAGE);
+
+const isArticle = Boolean(articleDate);
+const publishedTime = articleDate ? new Date(articleDate).toISOString() : undefined;
+
+function titleFromSlugSegment(segment: string): string {
+  return decodeURIComponent(segment)
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function buildBreadcrumbs() {
+  const cleanPath = Astro.url.pathname.replace(/\/+$/, "");
+  const segments = cleanPath.split("/").filter(Boolean);
+
+  const items: Array<{ name: string; url: string }> = [
+    { name: "Home", url: new URL("/", siteBase).toString() },
+  ];
+
+  let accPath = "";
+  for (const seg of segments) {
+    accPath += `/${seg}`;
+    items.push({ name: titleFromSlugSegment(seg), url: new URL(accPath, siteBase).toString() });
+  }
+
+  if (items.length > 1 && pageTitle) {
+    items[items.length - 1].name = pageTitle;
+  }
+
+  return items;
+}
+
+const breadcrumbItems = buildBreadcrumbs();
+
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "@id": `${canonical}#breadcrumb`,
+  itemListElement: breadcrumbItems.map((b, idx) => ({
+    "@type": "ListItem",
+    position: idx + 1,
+    name: b.name,
+    item: b.url,
+  })),
+};
+
+const blogPostingSchema = isArticle
+  ? {
+      "@type": "BlogPosting",
+      "@id": `${canonical}#article`,
+      url: canonical,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": canonical,
+      },
+      headline: pageTitle || SITE_NAME,
+      description: metaDescription,
+      image: ogImage ? [ogImage] : undefined,
+      datePublished: publishedTime,
+      dateModified: publishedTime,
+      author: {
+        "@type": "Organization",
+        name: SITE_NAME,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: SITE_NAME,
+      },
+    }
+  : undefined;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [breadcrumbSchema, ...(blogPostingSchema ? [blogPostingSchema] : [])],
+};
+---
+
+<AstroSEO
+  title={metaTitle}
+  description={metaDescription}
+  canonical={canonical}
+  openGraph={{
+    basic: {
+      title: metaTitle,
+      type: isArticle ? "article" : "website",
+      image: ogImage || "",
+    },
+    optional: {
+      siteName: SITE_NAME,
+      description: metaDescription,
+    },
+    ...(isArticle && publishedTime ? { article: { publishedTime } } : {})
+  }}
+  twitter={{
+    card: ogImage ? "summary_large_image" : "summary",
+    title: metaTitle,
+    description: metaDescription,
+    image: ogImage,
+  }}
+/>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>

@@ -1,0 +1,51 @@
+---
+import Container from "@/components/container.astro";
+import Pagetitle from "@/components/pagetitle.astro";
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import cx from "classnames";
+
+const allCategories = await getCollection("categories");
+const categories = allCategories.map((cat) => ({
+  slug: cat.id,
+  ...cat.data,
+}));
+
+const colorClasses = {
+  green: "bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800",
+  blue: "bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 border border-blue-100 dark:border-blue-800",
+  orange: "bg-orange-50 text-orange-700 dark:bg-orange-900/20 dark:text-orange-400 border border-orange-100 dark:border-orange-800",
+  purple: "bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400 border border-purple-100 dark:border-purple-800",
+  pink: "bg-pink-50 text-pink-600 dark:bg-pink-900/20 dark:text-pink-400 border border-pink-100 dark:border-pink-800",
+};
+---
+
+<Layout title="Danh mục" description="Duyệt tất cả các danh mục bài viết.">
+  <Container>
+    <Pagetitle>
+      <Fragment slot="title">Danh mục</Fragment>
+      <Fragment slot="desc">Khám phá các bài viết theo chủ đề.</Fragment>
+    </Pagetitle>
+    <main>
+      <div class="grid gap-6 mt-10 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          categories.map((category) => (
+            <a
+              href={`/category/${category.slug}`}
+              class={cx(
+                "p-8 transition-all duration-300 rounded-2xl hover:shadow-lg hover:-translate-y-1 block",
+                colorClasses[category.color] || colorClasses.pink
+              )}>
+              <h2 class="text-2xl font-bold tracking-tight mb-3">
+                {category.title}
+              </h2>
+              <p class="text-sm opacity-80 leading-relaxed">
+                {category.description}
+              </p>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </Container>
+</Layout>

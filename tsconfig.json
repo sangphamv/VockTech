@@ -1,0 +1,9 @@
+{
+  "extends": "astro/tsconfigs/strict", // ✅ Cập nhật đường dẫn extends mới (khuyên dùng 'strict' hoặc 'strictest')
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

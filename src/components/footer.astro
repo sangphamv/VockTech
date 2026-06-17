@@ -1,0 +1,38 @@
+---
+import Container from "./container.astro";
+import { SITE_CONFIG } from "@/site.config";
+---
+
+<Container class="mt-10 border-t border-gray-100 dark:border-gray-800">
+  <footer class="flex flex-col items-center">
+    <div class="text-sm text-center">
+      Bản quyền © {new Date().getFullYear()} {SITE_CONFIG.siteName}. Mọi quyền được bảo lưu.
+    </div>
+    <div
+      class="flex justify-center gap-1 mt-1 text-sm text-center text-gray-500 dark:text-gray-400">
+      <span>
+        Tạo bởi{" "}
+        <a
+          href={SITE_CONFIG.social.website}
+          rel="noopener"
+          target="_blank">
+          Web3Templates
+        </a>
+        <!--
+    Can we ask you a favor 🙏
+    Please keep this backlink on your website if possible.
+    or Purchase a commercial license from https://web3templates.com
+  -->
+      </span>
+      <span>&middot;</span>
+      <span>
+        <a
+          href={SITE_CONFIG.social.github}
+          rel="noopener"
+          target="_blank">
+          Github
+        </a>
+      </span>
+    </div>
+  </footer>
+</Container>

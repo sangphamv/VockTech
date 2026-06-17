@@ -1,0 +1,42 @@
+{
+  "name": "van-sang-gogh",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build && npx pagefind --site dist && node -e \"const fs = require('fs'); fs.cpSync('dist/pagefind', 'public/pagefind', {recursive: true});\"",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^6.0.3",
+    "@astrojs/node": "^10.1.4",
+    "@astrojs/partytown": "^2.1.7",
+    "@astrojs/react": "^5.0.7",
+    "@astrojs/rss": "^4.0.18",
+    "@astrojs/sitemap": "3.7.3",
+    "@astrojs/tailwind": "^6.0.2",
+    "@fontsource-variable/inter": "^5.0.18",
+    "@iconify-json/heroicons": "^1.1.21",
+    "@keystatic/astro": "^5.0.6",
+    "@keystatic/core": "^0.5.50",
+    "astro": "^6.4.6",
+    "astro-color-scheme": "^1.1.5",
+    "astro-font": "^1.1.0",
+    "astro-icon": "^1.1.0",
+    "astro-seo": "^0.8.4",
+    "mdast-util-to-string": "^4.0.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "reading-time": "^1.5.0",
+    "rehype-plugin-image-native-lazy-loading": "^1.2.0",
+    "tailwindcss": "^3.4.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "classnames": "^2.5.1",
+    "sharp": "^0.33.4"
+  }
+}
