@@ -14,7 +14,8 @@ import node from "@astrojs/node";
 import { remarkReadingTime } from "./src/utils/all";
 
 export default defineConfig({
-  site: "https://vansanggogh.pages.dev/",
+  output: 'static',
+  site: "https://khoso.pages.dev/",
   adapter: node({ mode: "standalone" }),
   markdown: {
     remarkPlugins: [remarkReadingTime],
@@ -27,7 +28,7 @@ export default defineConfig({
       serialize(item) {
         const urlObj = new URL(item.url);
         const parts = urlObj.pathname.split('/').filter(Boolean);
-        if (parts.length >= 3 && parts[0] === 'category') {
+        if (parts.length >= 3 && parts[0] === 'danh-muc') {
           const slug = parts[parts.length - 1];
           const mdxPath = path.resolve('./src/content/blog', slug, 'index.mdx');
           const mdPath = path.resolve('./src/content/blog', slug, 'index.md');

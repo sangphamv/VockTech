@@ -13,7 +13,7 @@ export async function GET(context: any) {
       title: post.data.title,
       pubDate: post.data.publishDate,
       description: post.data.excerpt,
-      link: `/category/${post.data.category}/${post.id.replace(/\.(md|mdx)$/, '')}/`,
+      link: `/danh-muc/${post.data.category}/${post.id.replace(/\.(md|mdx)$/, '')}/`,
     })),
     customData: `<language>${SITE_CONFIG.lang}</language>`,
   });

@@ -62,7 +62,7 @@ const seriesPosts = post.data.series
   <Container>
     <div class="max-w-screen-lg mx-auto">
       <div class="text-center">
-        <a href={"/category/" + category.slug}>
+        <a href={"/danh-muc/" + category.slug}>
           <Label theme={category.color as "green" | "blue" | "orange" | "purple" | "pink"}>{category.title}</Label>
         </a>
       </div>
@@ -76,13 +76,13 @@ const seriesPosts = post.data.series
             <span class="mx-0.5">/</span>
           </li>
           <li>
-            <a href="/category" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Danh mục</a>
+            <a href="/danh-muc" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Danh mục</a>
           </li>
           <li>
             <span class="mx-0.5">/</span>
           </li>
           <li>
-            <a href={`/category/${category.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{category.title}</a>
+            <a href={`/danh-muc/${category.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{category.title}</a>
           </li>
           <li>
             <span class="mx-0.5">/</span>
@@ -216,7 +216,7 @@ const seriesPosts = post.data.series
                       </span>
                     ) : (
                       <a 
-                        href={`/category/${category.slug}/${sp.id.replace(/\.(md|mdx)$/, '')}`} 
+                        href={`/danh-muc/${category.slug}/${sp.id.replace(/\.(md|mdx)$/, '')}`} 
                         class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
                       >
                         {sp.data.title}
