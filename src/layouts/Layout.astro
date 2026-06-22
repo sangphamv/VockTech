@@ -1,5 +1,5 @@
 ---
-import { AstroFont } from "astro-font";
+import '@fontsource-variable/inter';
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar.astro";
 import SEO from "@/components/SEO.astro";
@@ -33,19 +33,6 @@ const resolvedImage = image ?? ogimage;
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
     <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
-    <AstroFont
-      config={[
-        {
-          name: "Inter Variable",
-          src: [],
-          googleFontsURL: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-          preload: true,
-          display: "swap",
-          selector: "body",
-          fallback: "sans-serif",
-        },
-      ]}
-    />
     <SEO
       title={title}
       description={resolvedDescription}

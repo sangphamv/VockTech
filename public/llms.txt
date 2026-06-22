@@ -1,0 +1,15 @@
+# Kho Số
+
+> Trang blog chia sẻ kiến thức về lập trình, công nghệ, thiết kế và cuộc sống.
+
+## Về dự án
+
+Kho Số là một trang web cá nhân được phát triển bởi Van Sang-gogh, tập trung vào việc mang đến những bài viết chất lượng trong nhiều lĩnh vực.
+
+## Liên kết hữu ích
+
+- [Trang chủ Kho Số](https://khoso.pages.dev/)
+- [Danh mục bài viết](https://khoso.pages.dev/danh-muc/)
+- [Giới thiệu](https://khoso.pages.dev/gioi-thieu)
+- [Liên hệ](https://khoso.pages.dev/lien-he)
+- [Source code trên GitHub](https://github.com/sangphamv/Kho-So)
