@@ -14,7 +14,7 @@ import { remarkReadingTime } from "./src/utils/all";
 
 export default defineConfig({
   output: 'static',
-  site: "https://khoso.pages.dev/",
+  site: "https://vaoviec.pages.dev/",
   build: {
     inlineStylesheets: 'always',
   },
