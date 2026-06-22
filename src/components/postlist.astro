@@ -30,7 +30,7 @@ const TitleTag = aspect === "landscape" ? "h2" : "h3";
         post.data.image ? (
           <Picture
             src={post.data.image}
-            widths={[200, 400, 800]}
+            widths={[400, 800]}
             sizes="(max-width: 640px) 90vw, 480px"
             formats={["avif"]}
             fallbackFormat="avif"

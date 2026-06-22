@@ -39,7 +39,7 @@ const { tag, posts } = Astro.props;
     <main id="main-content">
       {posts.length > 0 ? (
         <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
-          {posts.map((post) => <Postlist post={post} aspect="square" />)}
+          {posts.map((post, index) => <Postlist post={post} aspect="square" preloadImage={index < 3} />)}
         </div>
       ) : (
         <div class="mt-10 text-center text-gray-500">

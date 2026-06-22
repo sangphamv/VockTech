@@ -68,26 +68,26 @@ const seriesPosts = post.data.series
       </div>
 
       <nav aria-label="Breadcrumb" class="flex justify-center mt-5 mb-2">
-        <ol class="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <li>
+        <ol class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+          <li class="whitespace-nowrap">
             <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Trang chủ</a>
           </li>
-          <li>
+          <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
-          <li>
+          <li class="whitespace-nowrap">
             <a href="/danh-muc" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Danh mục</a>
           </li>
-          <li>
+          <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
-          <li>
+          <li class="whitespace-nowrap">
             <a href={`/danh-muc/${category.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{category.title}</a>
           </li>
-          <li>
+          <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
-          <li class="text-gray-800 dark:text-gray-200 font-medium truncate max-w-[200px] sm:max-w-xs" aria-current="page" title={post.data.title}>
+          <li class="text-gray-800 dark:text-gray-200 font-medium truncate max-w-[150px] sm:max-w-xs" aria-current="page" title={post.data.title}>
             {post.data.title}
           </li>
         </ol>
@@ -109,8 +109,8 @@ const seriesPosts = post.data.series
                   width={80}
                   height={80}
                   format="avif"
-                  loading="lazy"
-                  decoding="async"
+                  loading="eager"
+                  fetchpriority="high"
                   class="rounded-full object-cover w-10 h-10"
                 />
               )
@@ -150,7 +150,7 @@ const seriesPosts = post.data.series
       post.data.image && (
         <Picture
           src={post.data.image}
-          widths={[400, 800, 1200, 1600]}
+          widths={[800, 1200]}
           sizes="(max-width: 800px) 100vw, 1200px"
           width={1024}
           height={576}

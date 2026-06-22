@@ -51,7 +51,7 @@ const { page } = Astro.props;
             page.data
               .slice(0, 2)
               .map((post: any) => (
-                <Postlist post={post} aspect="landscape" preloadImage={true} />
+                <Postlist post={post} aspect="landscape" preloadImage={page.currentPage > 1} />
               ))
           }
         </div>
@@ -72,7 +72,7 @@ const { page } = Astro.props;
               {
                 page.data
                   .slice(2)
-                  .map((post: any, index: number) => <Postlist post={post} aspect="square" preloadImage={index < 3} />)
+                  .map((post: any) => <Postlist post={post} aspect="square" preloadImage={false} />)
               }
             </div>
           </>

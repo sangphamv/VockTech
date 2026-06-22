@@ -1,5 +1,8 @@
 ---
 import '@fontsource-variable/inter';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interVietnamese from '@fontsource-variable/inter/files/inter-vietnamese-wght-normal.woff2?url';
+import interLatinExt from '@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2?url';
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar.astro";
 import SEO from "@/components/SEO.astro";
@@ -32,6 +35,9 @@ const resolvedImage = image ?? ogimage;
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={interVietnamese} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={interLatinExt} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
     <SEO
       title={title}
@@ -126,6 +132,29 @@ const resolvedImage = image ?? ogimage;
             }
           });
         });
+      });
+    </script>
+    <script is:inline>
+      // Add title to partytown or dynamically injected iframes for accessibility
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeName === 'IFRAME' && !node.hasAttribute('title')) {
+                node.setAttribute('title', 'Partytown Worker');
+                node.setAttribute('aria-hidden', 'true');
+                if (!node.hasAttribute('loading')) node.setAttribute('loading', 'lazy');
+              } else if (node.querySelectorAll) {
+                node.querySelectorAll('iframe:not([title])').forEach(iframe => {
+                  iframe.setAttribute('title', 'Partytown Worker');
+                  iframe.setAttribute('aria-hidden', 'true');
+                  if (!iframe.hasAttribute('loading')) iframe.setAttribute('loading', 'lazy');
+                });
+              }
+            });
+          });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
       });
     </script>
   </body>

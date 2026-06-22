@@ -23,10 +23,10 @@ import { SITE_CONFIG } from "@/site.config";
           <div class="group">
             <div class="w-full aspect-video">
               <Image
-                src={item.image}
+                src={item.image as any}
                 format="avif"
-                loading="lazy"
-                decoding="async"
+                loading="eager"
+                fetchpriority="high"
                 width={580}
                 height={326}
                 alt={`Ảnh chân dung của thành viên ${item.name} từ đội ngũ ${SITE_CONFIG.siteName}`}
