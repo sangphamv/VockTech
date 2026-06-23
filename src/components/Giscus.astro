@@ -8,9 +8,64 @@
     class="text-xl font-semibold tracking-tight mb-6 text-light-foreground dark:text-dark-foreground/90">
     Bình luận
   </h2>
-  <iframe
-    src="https://giscus.app/widget?repo=sangphamv/Vao-Viec&repoId=R_kgDOS9Ezzg&category=Announcements&categoryId=DIC_kwDOS9Ezzs4C_trU&mapping=pathname&strict=0&reactionsEnabled=1&emitMetadata=0&inputPosition=bottom&theme=preferred_color_scheme&lang=vi"
-    class="w-full border-none min-h-[300px]"
-    title="Bình luận"
-    loading="lazy"></iframe>
+  <div class="giscus-wrapper"></div>
+
+  <script is:inline>
+    // Hàm khởi tạo Giscus với theme chuẩn của trang
+    function loadGiscus() {
+      const theme = document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "light";
+
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.setAttribute("data-repo", "sangphamv/Vao-Viec");
+      script.setAttribute("data-repo-id", "R_kgDOS9Ezzg");
+      script.setAttribute("data-category", "Announcements");
+      script.setAttribute("data-category-id", "DIC_kwDOS9Ezzs4C_trU");
+      script.setAttribute("data-mapping", "pathname");
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", "1");
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", "bottom");
+      script.setAttribute("data-theme", theme);
+      script.setAttribute("data-lang", "vi"); // Chuyển sang tiếng Việt
+      script.setAttribute("data-loading", "lazy");
+      script.setAttribute("crossorigin", "anonymous");
+      script.async = true;
+
+      const wrapper = document.querySelector(".giscus-wrapper");
+      if (wrapper) {
+        wrapper.appendChild(script);
+      }
+    }
+
+    // Chạy ngay khi thẻ script này được load
+    loadGiscus();
+
+    // Lắng nghe sự kiện khi người dùng nhấn đổi giao diện (Light/Dark)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          const theme = document.documentElement.classList.contains("dark")
+            ? "dark"
+            : "light";
+          const iframe = document.querySelector("iframe.giscus-frame");
+          if (iframe && iframe.contentWindow) {
+            // Gửi tin nhắn đến iframe của Giscus để đổi theme mà không cần reload
+            iframe.contentWindow.postMessage(
+              { giscus: { setConfig: { theme } } },
+              "https://giscus.app",
+            );
+          }
+        }
+      });
+    });
+
+    // Theo dõi thay đổi class trên thẻ <html>
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  </script>
 </div>

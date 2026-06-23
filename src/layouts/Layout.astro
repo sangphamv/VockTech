@@ -36,6 +36,10 @@ const resolvedImage = image ?? ogimage;
     <meta name="generator" content={Astro.generator} />
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={interVietnamese} as="font" type="font/woff2" crossorigin="anonymous" />
+    
+    <!-- Preconnect hints cho các third-party origins (Giscus) -->
+    <link rel="preconnect" href="https://giscus.app" crossorigin />
+    <link rel="preconnect" href="https://api.github.com" crossorigin />
     <link rel="alternate" type="application/rss+xml" title={SITE_CONFIG.title} href="/rss.xml" />
     <SEO
       title={title}
