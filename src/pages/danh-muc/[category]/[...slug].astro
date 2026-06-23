@@ -24,10 +24,10 @@ export async function getStaticPaths() {
   const blog = await getCollection("blog");
 
   return blog.map((post) => ({
-    params: { 
+    params: {
       category: post.data.category,
-      slug: post.id.replace(/\.(md|mdx)$/, '') 
-    }, 
+      slug: post.id.replace(/\.(md|mdx)$/, ""),
+    },
     props: { post },
   }));
 }
@@ -38,8 +38,12 @@ const { Content, headings } = await render(post);
 
 const author = authors.find((item) => item.slug === post.data.author) as Author;
 const allCategories = await getCollection("categories");
-const categoryDoc = allCategories.find((item) => item.id === post.data.category);
-const category = categoryDoc ? { slug: categoryDoc.id, ...categoryDoc.data } : { slug: '', title: '', color: 'blue', description: '' };
+const categoryDoc = allCategories.find(
+  (item) => item.id === post.data.category,
+);
+const category = categoryDoc
+  ? { slug: categoryDoc.id, ...categoryDoc.data }
+  : { slug: "", title: "", color: "blue", description: "" };
 
 const relatedPosts = latestPosts
   .filter((p) => p.data.category === post.data.category && p.id !== post.id)
@@ -51,7 +55,6 @@ const seriesPosts = post.data.series
       .filter((p) => p.data.series === post.data.series)
       .sort((a, b) => (a.data.seriesOrder || 0) - (b.data.seriesOrder || 0))
   : [];
-
 ---
 
 <Layout
@@ -63,42 +66,65 @@ const seriesPosts = post.data.series
     <div class="max-w-screen-lg mx-auto">
       <div class="text-center">
         <a href={"/danh-muc/" + category.slug}>
-          <Label theme={category.color as "green" | "blue" | "orange" | "purple" | "pink"}>{category.title}</Label>
+          <Label
+            theme={category.color as
+              | "green"
+              | "blue"
+              | "orange"
+              | "purple"
+              | "pink"}>{category.title}</Label
+          >
         </a>
       </div>
 
       <nav aria-label="Breadcrumb" class="flex justify-center mt-5 mb-2">
-        <ol class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-sm text-gray-500 dark:text-gray-400">
+        <ol
+          class="flex flex-wrap justify-center items-center gap-x-2 gap-y-1 text-sm text-light-foreground/70 dark:text-dark-foreground/70">
           <li class="whitespace-nowrap">
-            <a href="/" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Trang chủ</a>
+            <a
+              href="/"
+              class="hover:text-light-accent dark:hover:text-dark-accent dark:hover:text-dark-accent transition-colors"
+              >Trang chủ</a
+            >
           </li>
           <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
           <li class="whitespace-nowrap">
-            <a href="/danh-muc" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Danh mục</a>
+            <a
+              href="/danh-muc"
+              class="hover:text-light-accent dark:hover:text-dark-accent dark:hover:text-dark-accent transition-colors"
+              >Danh mục</a
+            >
           </li>
           <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
           <li class="whitespace-nowrap">
-            <a href={`/danh-muc/${category.slug}`} class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">{category.title}</a>
+            <a
+              href={`/danh-muc/${category.slug}`}
+              class="hover:text-light-accent dark:hover:text-dark-accent dark:hover:text-dark-accent transition-colors"
+              >{category.title}</a
+            >
           </li>
           <li class="whitespace-nowrap">
             <span class="mx-0.5">/</span>
           </li>
-          <li class="text-gray-800 dark:text-gray-200 font-medium truncate max-w-[150px] sm:max-w-xs" aria-current="page" title={post.data.title}>
+          <li
+            class="text-light-foreground dark:text-dark-foreground/90 font-medium truncate max-w-[150px] sm:max-w-xs"
+            aria-current="page"
+            title={post.data.title}>
             {post.data.title}
           </li>
         </ol>
       </nav>
 
       <h1
-        class="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-brand-primary lg:text-4xl dark:text-white">
+        class="mt-2 mb-3 text-3xl font-semibold tracking-tight text-center lg:leading-snug text-light-accent dark:text-dark-accent lg:text-4xl">
         {post.data.title}
       </h1>
 
-      <div class="flex justify-center mt-3 space-x-3 text-gray-500">
+      <div class="flex justify-center mt-3 space-x-3 text-light-foreground/70">
         <div class="flex items-center gap-3">
           <div class="relative flex-shrink-0">
             {
@@ -118,25 +144,31 @@ const seriesPosts = post.data.series
           </div>
 
           <div>
-            <p class="text-gray-800 dark:text-gray-400">
+            <p class="text-light-foreground dark:text-dark-foreground/70">
               {author.name}
             </p>
             <div class="flex flex-wrap items-center space-x-2 text-sm gap-y-1">
               <time
-                class="text-gray-500 dark:text-gray-400"
+                class="text-light-foreground/70 dark:text-dark-foreground/70"
                 datetime={post.data.publishDate.toISOString()}>
                 {getFormattedDate(post.data.publishDate)}
               </time>
-              {post.data.updatedDate && post.data.updatedDate.getTime() > post.data.publishDate.getTime() && (
-                <>
-                  <span class="text-gray-400 dark:text-gray-500 hidden sm:inline">•</span>
-                  <time
-                    class="text-gray-500 dark:text-gray-400"
-                    datetime={post.data.updatedDate.toISOString()}>
-                    Cập nhật: {getFormattedDate(post.data.updatedDate)}
-                  </time>
-                </>
-              )}
+              {
+                post.data.updatedDate &&
+                  post.data.updatedDate.getTime() >
+                    post.data.publishDate.getTime() && (
+                    <>
+                      <span class="text-light-foreground/50 dark:text-dark-foreground/50 hidden sm:inline">
+                        •
+                      </span>
+                      <time
+                        class="text-light-foreground/70 dark:text-dark-foreground/70"
+                        datetime={post.data.updatedDate.toISOString()}>
+                        Cập nhật: {getFormattedDate(post.data.updatedDate)}
+                      </time>
+                    </>
+                  )
+              }
             </div>
           </div>
         </div>
@@ -167,112 +199,145 @@ const seriesPosts = post.data.series
   </div>
 
   <Container>
-    <div class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(auto,800px)_minmax(0,1fr)] gap-8 max-w-screen-xl mx-auto">
+    <div
+      class="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(auto,800px)_minmax(0,1fr)] gap-8 max-w-screen-xl mx-auto">
       <!-- Cột trái (để trống nhằm căn giữa bài viết) -->
       <div class="hidden xl:block"></div>
 
       <!-- Cột giữa (bài viết) -->
-      <article class="w-full min-w-0" data-pagefind-body data-pagefind-filter={`Thể loại:${category.title}`}>
-        {post.data.image && <meta data-pagefind-meta="image[content]" content={post.data.image.src} />}
-        
-        <div class="xl:hidden my-4">
-          <TOC headings={headings.filter(h => h.depth === 2 || h.depth === 3)} isAccordion={true} />
-        </div>
+      <article
+        class="w-full min-w-0"
+        data-pagefind-body
+        data-pagefind-filter={`Thể loại:${category.title}`}>
+        {
+          post.data.image && (
+            <meta
+              data-pagefind-meta="image[content]"
+              content={post.data.image.src}
+            />
+          )
+        }
 
-        <div class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-primary-600 hover:prose-a:text-primary-500 dark:prose-a:text-primary-400 dark:hover:prose-a:text-primary-300 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-none">
-          {seriesPosts.length > 0 && (
-            <div class="bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl mb-8 not-prose overflow-hidden">
-              <button 
-                onclick="
+        <div
+          class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-light-accent hover:prose-a:text-light-accent/80 dark:prose-a:text-dark-accent dark:hover:prose-a:text-dark-accent/80 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-none">
+          {
+            seriesPosts.length > 0 && (
+              <div class="bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 not-prose overflow-hidden">
+                <button
+                  onclick="
                   const content = this.nextElementSibling;
                   content.classList.toggle('grid-rows-[0fr]');
                   content.classList.toggle('grid-rows-[1fr]');
                   this.querySelector('.arrow-icon').classList.toggle('rotate-180');
                 "
-                class="w-full flex justify-between items-center font-medium text-gray-900 dark:text-gray-100 cursor-pointer p-5"
-              >
-                <span class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
-                  </svg>
-                  Series: {post.data.series}
-                </span>
-                <span class="arrow-icon transition-transform duration-300 rotate-180 text-gray-500 dark:text-gray-400">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                </span>
-              </button>
-              <div class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out">
-                <div class="overflow-hidden">
-                  <div class="px-5 pb-5">
-                    <ul class="space-y-3 m-0 p-0 list-none pt-4 border-t border-gray-200 dark:border-gray-700/80">
-                {seriesPosts.map((sp, index) => (
-                  <li class="flex items-start gap-3 text-[15px]">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-gray-200/60 dark:bg-gray-700/50 text-gray-600 dark:text-gray-400 flex items-center justify-center text-sm font-medium mt-0.5">
-                      {index + 1}
-                    </span>
-                    {sp.id === post.id ? (
-                      <span class="text-gray-900 dark:text-white font-medium">
-                        {sp.data.title} <span class="text-sm font-normal text-gray-500 dark:text-gray-400 ml-1">(Bài hiện tại)</span>
-                      </span>
-                    ) : (
-                      <a 
-                        href={`/danh-muc/${category.slug}/${sp.id.replace(/\.(md|mdx)$/, '')}`} 
-                        class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-                      >
-                        {sp.data.title}
-                      </a>
-                    )}
-                  </li>
-                ))}
-                    </ul>
+                  class="w-full flex justify-between items-center font-medium text-light-foreground dark:text-dark-foreground cursor-pointer p-5">
+                  <span class="flex items-center gap-2 text-gray-700 dark:text-dark-foreground/70">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5 text-light-foreground/70 dark:text-dark-foreground/70"
+                      viewBox="0 0 20 20"
+                      fill="currentColor">
+                      <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+                    </svg>
+                    Series: {post.data.series}
+                  </span>
+                  <span class="arrow-icon transition-transform duration-300 rotate-180 text-light-foreground/70 dark:text-dark-foreground/70">
+                    <svg
+                      class="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div class="grid grid-rows-[1fr] transition-[grid-template-rows] duration-300 ease-in-out">
+                  <div class="overflow-hidden">
+                    <div class="px-5 pb-5">
+                      <ul class="space-y-3 m-0 p-0 list-none pt-4 border-t border-light-surface dark:border-dark-surface/80">
+                        {seriesPosts.map((sp, index) => (
+                          <li class="flex items-start gap-3 text-[15px]">
+                            <span class="flex-shrink-0 w-6 h-6 rounded-full bg-light-surface/50/60 dark:bg-dark-surface/80/50 text-light-foreground/70 dark:text-dark-foreground/70 flex items-center justify-center text-sm font-medium mt-0.5">
+                              {index + 1}
+                            </span>
+                            {sp.id === post.id ? (
+                              <span class="text-light-foreground dark:text-dark-foreground font-medium">
+                                {sp.data.title}{" "}
+                                <span class="text-sm font-normal text-light-foreground/70 dark:text-dark-foreground/70 ml-1">
+                                  (Bài hiện tại)
+                                </span>
+                              </span>
+                            ) : (
+                              <a
+                                href={`/danh-muc/${category.slug}/${sp.id.replace(/\.(md|mdx)$/, "")}`}
+                                class="text-light-foreground/70 dark:text-dark-foreground/70 hover:text-light-foreground dark:hover:text-dark-foreground transition-colors">
+                                {sp.data.title}
+                              </a>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )
+          }
+
+          <div class="not-prose">
+            <TOC
+              headings={headings.filter((h) => h.depth === 2 || h.depth === 3)}
+              isAccordion={true}
+            />
+          </div>
 
           <Content />
 
           <div class="flex flex-wrap items-center w-full gap-3 md:w-auto mt-10">
             {
               post.data.tags.map((tag) => (
-                <a href={`/tags/${tag}`} class="text-sm text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">#{tag}</a>
+                <a
+                  href={`/tags/${tag}`}
+                  class="text-sm text-light-foreground/70 hover:text-light-accent dark:hover:text-dark-accent dark:text-dark-foreground/70 dark:hover:text-dark-accent">
+                  #{tag}
+                </a>
               ))
             }
           </div>
-          
+
           <ShareButtons title={post.data.title} url={Astro.url.href} />
         </div>
 
         {author && <Authorcard author={author} />}
-        
+
         <Newsletter />
         <Giscus />
       </article>
-
-      <!-- Cột phải (TOC) -->
-      <aside class="hidden xl:block w-full">
-        <div class="sticky top-28 w-full">
-          <TOC headings={headings.filter(h => h.depth === 2 || h.depth === 3)} />
-        </div>
-      </aside>
     </div>
   </Container>
 
-  {relatedPosts.length > 0 && (
-    <Container class="mt-14 pb-14">
-      <div class="border-t border-gray-100 dark:border-gray-800 pt-10">
-        <h2 class="text-2xl font-bold tracking-tight mb-8 dark:text-white text-center">
-          Bài viết liên quan
-        </h2>
-        <div class="grid gap-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
-          {relatedPosts.map((relatedPost) => (
-            <Postlist post={relatedPost} aspect="square" />
-          ))}
+  {
+    relatedPosts.length > 0 && (
+      <Container class="mt-14 pb-14">
+        <div class="border-t border-light-surface dark:border-dark-surface pt-10">
+          <h2 class="text-2xl font-bold tracking-tight mb-8 dark:text-dark-foreground text-center">
+            Bài viết liên quan
+          </h2>
+          <div class="grid gap-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
+            {relatedPosts.map((relatedPost) => (
+              <Postlist post={relatedPost} aspect="square" />
+            ))}
+          </div>
         </div>
-      </div>
-    </Container>
-  )}
+      </Container>
+    )
+  }
 
   <style is:global>
     :root {
@@ -285,7 +350,9 @@ const seriesPosts = post.data.series
       z-index: 100 !important;
     }
     .medium-zoom-image {
-      transition: transform 0.3s cubic-bezier(0.2, 0, 0.2, 1), border-radius 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
+      transition:
+        transform 0.3s cubic-bezier(0.2, 0, 0.2, 1),
+        border-radius 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
     }
     .medium-zoom-image--opened {
       z-index: 101 !important;
@@ -293,14 +360,18 @@ const seriesPosts = post.data.series
     }
   </style>
 
-  <script is:inline defer src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script>
+  <script
+    is:inline
+    defer
+    src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"
+  ></script>
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
-      const images = document.querySelectorAll('.prose img, .aspect-video img');
+      const images = document.querySelectorAll(".prose img, .aspect-video img");
       if (images.length > 0) {
         mediumZoom(images, {
           margin: 24,
-          background: 'var(--zoom-bg)',
+          background: "var(--zoom-bg)",
         });
       }
     });

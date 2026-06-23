@@ -17,10 +17,10 @@ import { SITE_CONFIG } from "@/site.config";
       <Fragment slot="desc">Chúng tôi là một đội ngũ nhỏ đầy đam mê.</Fragment>
     </Pagetitle>
 
-    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-5xl mt-12">
+    <div class="flex flex-wrap justify-center gap-10 mx-auto max-w-5xl mt-12">
       {
         authors.slice(0, 3).map((item) => (
-          <div class="group">
+          <div class="group w-full md:w-72 lg:w-80">
             <div class="w-full aspect-video">
               <Image
                 src={item.image as any}
@@ -35,7 +35,7 @@ import { SITE_CONFIG } from "@/site.config";
             </div>
 
             <div class="mt-4 text-center">
-              <h3 class="text-sm text-gray-500 dark:text-gray-300">
+              <h3 class="text-sm text-light-foreground/70 dark:text-dark-foreground/70">
                 {" "}
                 {item.name}
               </h3>
@@ -46,7 +46,7 @@ import { SITE_CONFIG } from "@/site.config";
     </div>
 
     <div class="mx-auto max-w-2xl text-center mt-14">
-      <p class="text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+      <p class="text-lg leading-relaxed text-light-foreground/70 dark:text-dark-foreground/70">
         Chúng tôi là một đội ngũ đa văn hóa từ khắp nơi trên thế giới! Chúng tôi đến từ những nền tảng đa dạng, mang theo những tính cách, kinh nghiệm và kỹ năng khác nhau vào công việc. Đó là điều làm cho đội ngũ của chúng tôi trở nên đặc biệt.
       </p>
       <div class="mt-8">

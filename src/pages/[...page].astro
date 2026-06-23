@@ -20,15 +20,15 @@ const { page } = Astro.props;
     <main id="main-content">
       {page.currentPage === 1 && (
         <div class="min-h-[85vh] flex flex-col items-center justify-center text-center mb-24 md:mb-32">
-          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-6">
-            Khám phá <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-purple-500">Thủ Thuật Công Nghệ</span> Đỉnh Cao
+          <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-light-foreground dark:text-dark-foreground mb-6">
+            Khám phá <span class="text-transparent bg-clip-text bg-gradient-to-r from-light-accent to-light-accent/70 dark:from-dark-accent dark:to-dark-accent/70">Thủ Thuật Công Nghệ</span> Đỉnh Cao
           </h1>
-          <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mb-10">
-            Cập nhật những xu hướng mới nhất, đánh giá sản phẩm khách quan và chia sẻ kinh nghiệm công nghệ thực tiễn dành riêng cho bạn.
+          <p class="text-lg md:text-xl text-light-foreground/70 dark:text-dark-foreground/70 max-w-2xl mb-10">
+            Nơi chia sẻ kiến thức, kinh nghiệm và những xu hướng mới nhất về công nghệ, lập trình và phần mềm.
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center px-4 sm:px-0">
-            <a href="#latest-posts" class="w-full sm:w-auto px-8 py-3.5 bg-primary-600 text-white font-medium rounded-xl hover:bg-primary-700 transition-all shadow-sm hover:shadow-lg hover:-translate-y-1 duration-300 text-center">Đọc bài mới nhất</a>
-            <a href="/danh-muc" class="w-full sm:w-auto px-8 py-3.5 border-2 border-gray-200 dark:border-gray-800 text-gray-900 dark:text-white font-medium rounded-xl hover:border-primary-500 hover:text-primary-600 dark:hover:border-primary-500 dark:hover:text-primary-400 transition-all duration-300 text-center">Khám phá danh mục</a>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#latest-posts" class="w-full sm:w-auto px-8 py-3.5 bg-light-accent dark:bg-dark-accent text-white font-medium rounded-xl hover:bg-light-accent/90 dark:hover:bg-dark-accent/90 transition-all shadow-sm hover:shadow-lg hover:-translate-y-1 duration-300 text-center">Đọc bài mới nhất</a>
+            <a href="/danh-muc" class="w-full sm:w-auto px-8 py-3.5 border-2 border-light-surface dark:border-dark-surface text-light-foreground dark:text-dark-foreground font-medium rounded-xl hover:border-light-accent dark:hover:border-dark-accent hover:text-light-accent dark:hover:text-dark-accent transition-all duration-300 text-center">Khám phá danh mục</a>
           </div>
         </div>
       )}
@@ -38,10 +38,10 @@ const { page } = Astro.props;
       
       <>
         <div class="mb-8 flex items-center justify-between">
-          <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-light-foreground dark:text-dark-foreground">
             <span class="relative inline-block">
               {page.currentPage === 1 ? "Bài viết nổi bật" : `Tất cả bài viết - Trang ${page.currentPage}`}
-              <span class="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary-500 rounded-full"></span>
+              <span class="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-light-accent dark:bg-dark-accent rounded-full"></span>
             </span>
           </h2>
         </div>
@@ -60,10 +60,10 @@ const { page } = Astro.props;
           <>
             {page.currentPage === 1 && (
               <div class="mt-16 mb-8 flex items-center justify-between">
-                <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h2 class="text-2xl md:text-3xl font-bold tracking-tight text-light-foreground dark:text-dark-foreground">
                   <span class="relative inline-block">
                     Mới cập nhật
-                    <span class="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-primary-500 rounded-full"></span>
+                    <span class="absolute -bottom-2 left-0 w-1/2 h-1.5 bg-light-accent dark:bg-dark-accent rounded-full"></span>
                   </span>
                 </h2>
               </div>

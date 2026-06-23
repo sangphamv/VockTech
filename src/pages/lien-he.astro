@@ -16,26 +16,26 @@ import { SITE_CONFIG } from "@/site.config";
 
     <div class="grid md:grid-cols-2 gap-10 mx-auto max-w-5xl mt-16">
       <div>
-        <h2 class="font-medium text-2xl text-gray-800 dark:text-gray-200">
+        <h2 class="font-medium text-2xl text-light-foreground dark:text-dark-foreground/90">
           Liên hệ với {SITE_CONFIG.siteName}
         </h2>
         <p
-          class="text-lg leading-relaxed text-gray-500 dark:text-gray-400 mt-3">
+          class="text-lg leading-relaxed text-light-foreground/70 dark:text-dark-foreground/70 mt-3">
           Bạn có điều muốn chia sẻ? Chúng tôi luôn sẵn sàng hỗ trợ. Hãy điền vào biểu mẫu, gửi email hoặc gọi điện thoại cho chúng tôi.
         </p>
         <div class="mt-5">
           <div
-            class="flex items-center mt-2 space-x-2 text-gray-600 dark:text-gray-300">
-            <Icon class="text-gray-400 w-4 h-4" name="heroicons:map-pin" />
+            class="flex items-center mt-2 space-x-2 text-light-foreground/70 dark:text-dark-foreground/70">
+            <Icon class="text-light-foreground/50 w-4 h-4" name="heroicons:map-pin" />
             <span>{SITE_CONFIG.contact.address}</span>
           </div><div
-            class="flex items-center mt-2 space-x-2 text-gray-600 dark:text-gray-300">
-            <Icon class="text-gray-400 w-4 h-4" name="heroicons:envelope" /><a
+            class="flex items-center mt-2 space-x-2 text-light-foreground/70 dark:text-dark-foreground/70">
+            <Icon class="text-light-foreground/50 w-4 h-4" name="heroicons:envelope" /><a
               href={`mailto:${SITE_CONFIG.contact.email}`}>{SITE_CONFIG.contact.email}</a
             >
           </div><div
-            class="flex items-center mt-2 space-x-2 text-gray-600 dark:text-gray-300">
-            <Icon class="text-gray-400 w-4 h-4" name="heroicons:phone" /><a
+            class="flex items-center mt-2 space-x-2 text-light-foreground/70 dark:text-dark-foreground/70">
+            <Icon class="text-light-foreground/50 w-4 h-4" name="heroicons:phone" /><a
               href={`tel:${SITE_CONFIG.contact.phone}`}>{SITE_CONFIG.contact.phone}</a
             >
           </div>

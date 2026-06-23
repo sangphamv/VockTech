@@ -10,11 +10,11 @@ const { headings, isAccordion = false } = Astro.props;
 {
   headings.length > 0 &&
     (isAccordion ? (
-      <details class="group bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-800 rounded-xl p-4 mb-6 transition-all duration-300">
-        <summary class="flex justify-between items-center font-medium text-gray-800 dark:text-gray-200 cursor-pointer list-none [&::-webkit-details-marker]:hidden select-none">
-          <span class="flex items-center gap-2">
+      <details class="group bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 transition-all duration-300 overflow-hidden">
+        <summary class="w-full flex justify-between items-center font-medium text-light-foreground dark:text-dark-foreground cursor-pointer p-5 list-none [&::-webkit-details-marker]:hidden select-none">
+          <span class="flex items-center gap-2 text-gray-700 dark:text-dark-foreground/70">
             <svg
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              class="w-5 h-5 text-light-foreground/70 dark:text-dark-foreground/70"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ const { headings, isAccordion = false } = Astro.props;
             </svg>
             Mục lục
           </span>
-          <span class="transition-transform duration-300 group-open:rotate-180 text-gray-500 dark:text-gray-400">
+          <span class="transition-transform duration-300 group-open:rotate-180 text-light-foreground/70 dark:text-dark-foreground/70">
             <svg
               class="w-5 h-5"
               fill="none"
@@ -44,31 +44,33 @@ const { headings, isAccordion = false } = Astro.props;
             </svg>
           </span>
         </summary>
-        <ul class="mt-4 space-y-1 text-[13px] text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-800/80 pt-4">
-          {headings.map((heading) => (
-            <li
-              class={`leading-snug ${heading.depth === 3 ? "ml-4 pl-3 border-l border-gray-200 dark:border-gray-700 text-[12px] text-gray-500 dark:text-gray-400 mt-1" : "text-gray-700 dark:text-gray-300 mt-2"}`}>
-              <a
-                href={`#${heading.slug}`}
-                class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors block py-1">
-                {heading.text}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div class="px-5 pb-5">
+          <ul class="space-y-3 m-0 p-0 text-[14px] text-light-foreground/80 dark:text-dark-foreground/80 border-t border-light-surface dark:border-dark-surface/80 pt-4 list-none">
+            {headings.map((heading) => (
+              <li
+                class={`leading-relaxed ${heading.depth === 3 ? "ml-4 pl-3 border-l border-light-surface dark:border-dark-surface text-[13px] text-light-foreground/60 dark:text-dark-foreground/60 mt-2" : "text-light-foreground/80 dark:text-dark-foreground/80 mt-3"}`}>
+                <a
+                  href={`#${heading.slug}`}
+                  class="hover:text-light-accent dark:hover:text-dark-accent transition-colors block py-1">
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
       </details>
     ) : (
       <nav class="toc-container">
-        <h3 class="font-medium mb-4 text-gray-700 dark:text-gray-300 uppercase tracking-wider text-sm">
+        <h3 class="font-medium mb-4 text-gray-700 dark:text-dark-foreground/70 uppercase tracking-wider text-sm">
           Mục lục
         </h3>
-        <ul class="space-y-1 text-[13px] text-gray-600 dark:text-gray-400">
+        <ul class="space-y-1 text-[13px] text-light-foreground/70 dark:text-dark-foreground/70">
           {headings.map((heading) => (
             <li
-              class={`leading-snug ${heading.depth === 3 ? "ml-4 pl-3 border-l border-gray-200 dark:border-gray-700 text-[12px] text-gray-500 dark:text-gray-400 mt-1" : "text-gray-700 dark:text-gray-300 mt-2"}`}>
+              class={`leading-snug ${heading.depth === 3 ? "ml-4 pl-3 border-l border-light-surface dark:border-dark-surface text-[12px] text-light-foreground/70 dark:text-dark-foreground/70 mt-1" : "text-gray-700 dark:text-dark-foreground/70 mt-2"}`}>
               <a
                 href={`#${heading.slug}`}
-                class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors block py-1">
+                class="hover:text-light-accent dark:hover:text-dark-accent dark:hover:text-dark-accent transition-colors block py-1">
                 {heading.text}
               </a>
             </li>

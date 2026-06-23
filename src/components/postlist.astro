@@ -12,18 +12,22 @@ import { getCollection } from "astro:content";
 const { post, aspect, preloadImage } = Astro.props;
 const author = authors.find((item) => item.slug === post.data.author) as Author;
 const allCategories = await getCollection("categories");
-const categoryDoc = allCategories.find((item) => item.id === post.data.category);
-const category = categoryDoc ? { slug: categoryDoc.id, ...categoryDoc.data } : null;
+const categoryDoc = allCategories.find(
+  (item) => item.id === post.data.category,
+);
+const category = categoryDoc
+  ? { slug: categoryDoc.id, ...categoryDoc.data }
+  : null;
 
-const slug = post.id.replace(/\.(md|mdx)$/, '');
+const slug = post.id.replace(/\.(md|mdx)$/, "");
 const TitleTag = aspect === "landscape" ? "h2" : "h3";
 ---
 
 <div class="cursor-pointer group relative">
   <div
     class={cx(
-      "relative overflow-hidden transition-all duration-300 bg-gray-100 rounded-xl dark:bg-gray-800 group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-primary-500/20",
-      "aspect-video"
+      "relative overflow-hidden transition-all duration-300 bg-light-surface/30 rounded-xl dark:bg-dark-surface group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-light-accent/20 dark:group-hover:shadow-dark-accent/20",
+      "aspect-video",
     )}>
     <a href={"/danh-muc/" + post.data.category + "/" + slug}>
       {
@@ -41,26 +45,29 @@ const TitleTag = aspect === "landscape" ? "h2" : "h3";
           />
         ) : (
           <span class="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            <Icon
-              class="w-4 h-4 text-black"
-              name="heroicons:photo"
-            />
+            <Icon class="w-4 h-4 text-black" name="heroicons:photo" />
           </span>
         )
       }
     </a>
   </div>
 
-  {category && (
-    <a href={"/danh-muc/" + category.slug}>
-      <Label theme={category.color}>{category.title}</Label>
-    </a>
-  )}
+  {
+    category && (
+      <a href={"/danh-muc/" + category.slug}>
+        <Label theme={(["green", "blue", "orange", "purple", "pink"])[
+          Math.abs(category.slug.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)) % 5
+        ] as any}>{category.title}</Label>
+      </a>
+    )
+  }
   <TitleTag
-    class="mt-2 text-lg font-semibold tracking-normal text-primary-600 dark:text-white">
-    <a href={"/danh-muc/" + post.data.category + "/" + slug} class="before:absolute before:inset-0 before:z-10">
+    class="mt-3 text-lg font-semibold tracking-normal text-light-accent dark:text-dark-accent dark:text-dark-foreground">
+    <a
+      href={"/danh-muc/" + post.data.category + "/" + slug}
+      class="before:absolute before:inset-0 before:z-10">
       <span
-        class="bg-gradient-to-r from-primary-200 to-primary-100 dark:from-primary-800 dark:to-primary-900 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
+        class="bg-gradient-to-r from-light-accent/30 to-light-accent/10 dark:from-dark-accent/30 dark:to-dark-accent/10 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
         {post.data.title}
       </span>
     </a>
@@ -68,14 +75,16 @@ const TitleTag = aspect === "landscape" ? "h2" : "h3";
 
   {
     post.data.excerpt && (
-      <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">
-        <a href={"/danh-muc/" + post.data.category + "/" + slug}>{post.data.excerpt}</a>
+      <p class="mt-3 text-sm leading-relaxed text-light-foreground/70 dark:text-dark-foreground/70 line-clamp-2">
+        <a href={"/danh-muc/" + post.data.category + "/" + slug}>
+          {post.data.excerpt}
+        </a>
       </p>
     )
   }
 
   <div
-    class="flex items-center mt-3 space-x-3 text-gray-500 dark:text-gray-400">
+    class="flex items-center mt-5 space-x-3 text-light-foreground/70 dark:text-dark-foreground/70">
     <div class="flex items-center gap-3">
       <span class="text-sm">{author.name}</span>
     </div>

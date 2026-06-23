@@ -42,7 +42,7 @@ const { tag, posts } = Astro.props;
           {posts.map((post, index) => <Postlist post={post} aspect="square" preloadImage={index < 3} />)}
         </div>
       ) : (
-        <div class="mt-10 text-center text-gray-500">
+        <div class="mt-10 text-center text-light-foreground/70">
           Chưa có bài viết nào với thẻ này.
         </div>
       )}
