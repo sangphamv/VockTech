@@ -10,7 +10,7 @@ const { headings, isAccordion = false } = Astro.props;
 {
   headings.length > 0 &&
     (isAccordion ? (
-      <details class="group bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 transition-all duration-300 overflow-hidden">
+      <details open class="group bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 transition-all duration-300 overflow-hidden">
         <summary class="w-full flex justify-between items-center font-medium text-light-foreground dark:text-dark-foreground cursor-pointer p-5 list-none [&::-webkit-details-marker]:hidden select-none">
           <span class="flex items-center gap-2 text-gray-700 dark:text-dark-foreground/70">
             <svg

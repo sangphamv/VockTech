@@ -3,19 +3,25 @@
 // Bạn cần thay thế các giá trị YOUR_... bằng cấu hình lấy từ https://giscus.app
 ---
 
-<div class="mt-14 pt-8 border-t border-light-surface dark:border-dark-surface">
+<div class="mt-14 pt-8 border-t border-light-surface dark:border-dark-surface w-full">
   <h2
-    class="text-xl font-semibold tracking-tight mb-6 text-light-foreground dark:text-dark-foreground/90">
+    class="text-2xl font-bold tracking-tight mb-8 text-light-foreground dark:text-dark-foreground">
     Bình luận
   </h2>
-  <div class="giscus-wrapper"></div>
+  <div class="giscus-wrapper w-full"></div>
 
   <script is:inline>
+    // Sử dụng theme mặc định của Giscus thay vì file CSS tự tạo
+    // (File CSS tự tạo sẽ bị chặn trên localhost do lỗi Mixed Content, 
+    // và Data URI bị chặn bởi chính sách bảo mật CSP của Giscus.app)
+    function getThemeName() {
+      const isDark = document.documentElement.classList.contains("dark");
+      return isDark ? "transparent_dark" : "light";
+    }
+
     // Hàm khởi tạo Giscus với theme chuẩn của trang
     function loadGiscus() {
-      const theme = document.documentElement.classList.contains("dark")
-        ? "dark"
-        : "light";
+      const themeName = getThemeName();
 
       const script = document.createElement("script");
       script.src = "https://giscus.app/client.js";
@@ -28,7 +34,7 @@
       script.setAttribute("data-reactions-enabled", "1");
       script.setAttribute("data-emit-metadata", "0");
       script.setAttribute("data-input-position", "bottom");
-      script.setAttribute("data-theme", theme);
+      script.setAttribute("data-theme", themeName);
       script.setAttribute("data-lang", "vi"); // Chuyển sang tiếng Việt
       script.setAttribute("data-loading", "lazy");
       script.setAttribute("crossorigin", "anonymous");
@@ -47,14 +53,12 @@
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === "class") {
-          const theme = document.documentElement.classList.contains("dark")
-            ? "dark"
-            : "light";
+          const themeName = getThemeName();
           const iframe = document.querySelector("iframe.giscus-frame");
           if (iframe && iframe.contentWindow) {
             // Gửi tin nhắn đến iframe của Giscus để đổi theme mà không cần reload
             iframe.contentWindow.postMessage(
-              { giscus: { setConfig: { theme } } },
+              { giscus: { setConfig: { theme: themeName } } },
               "https://giscus.app",
             );
           }
