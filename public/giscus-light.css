@@ -1,0 +1,17 @@
+@import url('https://giscus.app/themes/light.css');
+
+main {
+  /* Làm trong suốt nền chính để khớp với nền trang web */
+  --color-canvas-default: transparent !important;
+  
+  /* Làm trong suốt nền của các thành phần nổi/dropdown nếu cần */
+  --color-canvas-overlay: transparent !important;
+  
+  /* Chỉnh nhẹ nền của các box (như khối code, trích dẫn) */
+  --color-canvas-inset: rgba(255, 255, 255, 0.5) !important;
+  --color-canvas-subtle: transparent !important;
+  
+  /* Điều chỉnh màu viền cho khớp với theme (màu surface của web) */
+  --color-border-default: #B3A795 !important;
+  --color-border-muted: rgba(179, 167, 149, 0.5) !important;
+}

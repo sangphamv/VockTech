@@ -1,4 +1,5 @@
 import { defineConfig } from "astro/config";
+import { unified } from "@astrojs/markdown-remark";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -19,8 +20,9 @@ export default defineConfig({
     inlineStylesheets: 'always',
   },
   markdown: {
-    remarkPlugins: [remarkReadingTime],
-    extendDefaultPlugins: true,
+    processor: unified({
+      remarkPlugins: [remarkReadingTime],
+    }),
   },
   integrations: [
     tailwind(),

@@ -10,13 +10,26 @@
   </h2>
   <div class="giscus-wrapper w-full"></div>
 
+  <style is:global>
+    /* Đảm bảo iframe và container của giscus luôn tràn viền */
+    .giscus, .giscus-frame {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  </style>
+
   <script is:inline>
     // Sử dụng theme mặc định của Giscus thay vì file CSS tự tạo
     // (File CSS tự tạo sẽ bị chặn trên localhost do lỗi Mixed Content, 
     // và Data URI bị chặn bởi chính sách bảo mật CSP của Giscus.app)
     function getThemeName() {
       const isDark = document.documentElement.classList.contains("dark");
-      return isDark ? "transparent_dark" : "light";
+      if (isDark) return "transparent_dark";
+      
+      // Trên localhost, Giscus sẽ chặn file CSS custom do lỗi Mixed Content (http vs https).
+      // Vì vậy ta dùng theme 'light' mặc định khi dev, và dùng custom CSS khi build production.
+      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      return isLocalhost ? "light" : window.location.origin + "/giscus-light.css";
     }
 
     // Hàm khởi tạo Giscus với theme chuẩn của trang
