@@ -1,8 +1,9 @@
 @import url('https://giscus.app/themes/light.css');
 
 main {
-  /* Làm trong suốt nền chính để khớp với nền trang web (#F7F5F0) */
-  --color-canvas-default: transparent !important;
+  color-scheme: light;
+  /* Dùng màu nền thực tế thay vì transparent để tránh lỗi iframe nền đen khi OS ở Dark Mode */
+  --color-canvas-default: #F7F5F0 !important;
   --color-canvas-overlay: #F7F5F0 !important;
   --color-canvas-inset: rgba(255, 255, 255, 0.5) !important;
   --color-canvas-subtle: rgba(179, 167, 149, 0.15) !important;

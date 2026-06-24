@@ -53,6 +53,7 @@
     --pagefind-ui-border: #B3A795; /* light.surface */
     --pagefind-ui-tag: #F7F5F0; /* light.background */
     --pagefind-ui-border-width: 1px;
+
     --pagefind-ui-border-radius: 0.5rem;
     --pagefind-ui-image-border-radius: 0.5rem;
     --pagefind-ui-image-box-ratio: 3 / 2;
@@ -67,17 +68,10 @@
     --pagefind-ui-tag: #161413; /* dark.background */
   }
 
+  /* Thay đổi thành dạng mở rộng chiều dài giao diện (inline expansion) */
   .pagefind-ui .pagefind-ui__drawer:not(.pagefind-ui__hidden) {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-top: 0px;
-    z-index: 9999;
-    padding: 0 2rem 2rem;
-    background-color: var(--pagefind-ui-background);
-    border: 1px solid var(--pagefind-ui-border);
-    border-radius: var(--pagefind-ui-border-radius);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    margin-top: 1.5rem;
+    padding-bottom: 2rem;
   }
 
   .pagefind-ui .pagefind-ui__result-link {
