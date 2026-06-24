@@ -1,17 +1,38 @@
 @import url('https://giscus.app/themes/light.css');
 
 main {
-  /* Làm trong suốt nền chính để khớp với nền trang web */
+  /* Làm trong suốt nền chính để khớp với nền trang web (#F7F5F0) */
   --color-canvas-default: transparent !important;
-  
-  /* Làm trong suốt nền của các thành phần nổi/dropdown nếu cần */
-  --color-canvas-overlay: transparent !important;
-  
-  /* Chỉnh nhẹ nền của các box (như khối code, trích dẫn) */
+  --color-canvas-overlay: #F7F5F0 !important;
   --color-canvas-inset: rgba(255, 255, 255, 0.5) !important;
-  --color-canvas-subtle: transparent !important;
+  --color-canvas-subtle: rgba(179, 167, 149, 0.15) !important;
   
-  /* Điều chỉnh màu viền cho khớp với theme (màu surface của web) */
+  /* Chỉnh màu chữ đồng bộ với theme (Text: #1C1B1A) */
+  --color-fg-default: #1C1B1A !important;
+  --color-fg-muted: #5e5a55 !important;
+  --color-fg-subtle: #8a857d !important;
+  
+  /* Điều chỉnh màu viền cho khớp với theme (màu surface của web: #B3A795) */
   --color-border-default: #B3A795 !important;
   --color-border-muted: rgba(179, 167, 149, 0.5) !important;
+
+  /* Màu nút bấm mặc định */
+  --color-btn-text: #1C1B1A !important;
+  --color-btn-bg: transparent !important;
+  --color-btn-border: #B3A795 !important;
+  --color-btn-hover-bg: rgba(179, 167, 149, 0.2) !important;
+  --color-btn-hover-border: #1C1B1A !important;
+
+  /* Màu nút bấm primary (Accent: #FF5722) */
+  --color-btn-primary-text: #FFFFFF !important;
+  --color-btn-primary-bg: #FF5722 !important;
+  --color-btn-primary-border: #FF5722 !important;
+  --color-btn-primary-hover-bg: #E64A19 !important;
+  --color-btn-primary-hover-border: #E64A19 !important;
+
+  /* Accent (Link, focus ring, v.v...) */
+  --color-accent-fg: #FF5722 !important;
+  --color-accent-emphasis: #FF5722 !important;
+  --color-accent-muted: rgba(255, 87, 34, 0.4) !important;
+  --color-accent-subtle: rgba(255, 87, 34, 0.1) !important;
 }
