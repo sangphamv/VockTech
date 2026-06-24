@@ -17,6 +17,9 @@ import { Icon } from "astro-icon/components";
       themeToggle.addEventListener('click', () => {
         document.documentElement.classList.add('theme-transition');
         
+        // Buộc trình duyệt tính toán lại layout (reflow) để đảm bảo transition hoạt động đúng
+        void document.documentElement.offsetWidth;
+
         if (document.documentElement.classList.contains('dark')) {
           document.documentElement.classList.remove('dark');
           localStorage.setItem('theme', 'light');
@@ -27,7 +30,7 @@ import { Icon } from "astro-icon/components";
 
         window.setTimeout(() => {
           document.documentElement.classList.remove('theme-transition');
-        }, 300);
+        }, 350);
       });
     }
   });

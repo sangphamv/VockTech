@@ -63,17 +63,24 @@
     loadGiscus();
 
     // Lắng nghe sự kiện khi người dùng nhấn đổi giao diện (Light/Dark)
+    let currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === "class") {
-          const themeName = getThemeName();
-          const iframe = document.querySelector("iframe.giscus-frame");
-          if (iframe && iframe.contentWindow) {
-            // Gửi tin nhắn đến iframe của Giscus để đổi theme mà không cần reload
-            iframe.contentWindow.postMessage(
-              { giscus: { setConfig: { theme: themeName } } },
-              "https://giscus.app",
-            );
+          const isDark = document.documentElement.classList.contains("dark");
+          const newTheme = isDark ? "dark" : "light";
+          
+          if (newTheme !== currentTheme) {
+            currentTheme = newTheme;
+            const themeName = getThemeName();
+            const iframe = document.querySelector("iframe.giscus-frame");
+            if (iframe && iframe.contentWindow) {
+              // Gửi tin nhắn đến iframe của Giscus để đổi theme mà không cần reload
+              iframe.contentWindow.postMessage(
+                { giscus: { setConfig: { theme: themeName } } },
+                "https://giscus.app",
+              );
+            }
           }
         }
       });
