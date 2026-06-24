@@ -1,6 +1,6 @@
 @import url('https://giscus.app/themes/light.css');
 
-main {
+:root, main {
   color-scheme: light;
   /* Dùng màu nền thực tế thay vì transparent để tránh lỗi iframe nền đen khi OS ở Dark Mode */
   --color-canvas-default: #F7F5F0 !important;
