@@ -30,7 +30,7 @@ const { page, category } = Astro.props;
 
 <Layout title={category.title} description={category.description}>
   <Container>
-    <Pagetitle>
+    <Pagetitle isFullScreen={true}>
       <Fragment slot="title">{category.title}</Fragment>
       <Fragment slot="desc">{category.description}</Fragment>
     </Pagetitle>
@@ -38,7 +38,7 @@ const { page, category } = Astro.props;
       {page.data.length > 0 ? (
         <>
           <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
-            {page.data.map((post, index) => <Postlist post={post} aspect="square" preloadImage={index < 3} />)}
+            {page.data.map((post, index) => <Postlist post={post} aspect="square" preloadImage={false} />)}
           </div>
           
           {/* Pagination Controls */}

@@ -62,6 +62,9 @@ const seriesPosts = post.data.series
   description={post.data.excerpt}
   image={post.data.image.src}
   articleDate={post.data.publishDate}>
+  
+  <!-- Reading Progress Bar -->
+  <div id="progress-bar" class="fixed top-0 left-0 h-1.5 bg-light-accent dark:bg-dark-accent z-[100] transition-all duration-150" style="width: 0%"></div>
   <Container>
     <div class="max-w-screen-lg mx-auto">
       <div class="text-center">
@@ -219,7 +222,7 @@ const seriesPosts = post.data.series
         }
 
         <div
-          class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-light-accent hover:prose-a:text-light-accent/80 dark:prose-a:text-dark-accent dark:hover:prose-a:text-dark-accent/80 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-none">
+          class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-light-accent hover:prose-a:text-light-accent/80 dark:prose-a:text-dark-accent dark:hover:prose-a:text-dark-accent/80 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-[70ch]">
           {
             seriesPosts.length > 0 && (
               <div class="bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 not-prose overflow-hidden">
@@ -369,6 +372,18 @@ const seriesPosts = post.data.series
           margin: 24,
           background: "var(--zoom-bg)",
         });
+      }
+      // Reading Progress Bar
+      const progressBar = document.getElementById('progress-bar');
+      if (progressBar) {
+        window.addEventListener('scroll', () => {
+          const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+          const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+          if (scrollHeight > 0) {
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+          }
+        }, { passive: true });
       }
     });
   </script>

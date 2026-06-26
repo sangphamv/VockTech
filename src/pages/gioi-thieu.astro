@@ -12,7 +12,7 @@ import { SITE_CONFIG } from "@/site.config";
 
 <Layout title="Giới thiệu" description={`Tìm hiểu thêm về đội ngũ phía sau ${SITE_CONFIG.siteName}.`}>
   <Container>
-    <Pagetitle>
+    <Pagetitle isFullScreen={true}>
       <Fragment slot="title">Giới thiệu</Fragment>
       <Fragment slot="desc">Chúng tôi là một đội ngũ nhỏ đầy đam mê.</Fragment>
     </Pagetitle>
@@ -25,8 +25,7 @@ import { SITE_CONFIG } from "@/site.config";
               <Image
                 src={item.image as any}
                 format="avif"
-                loading="eager"
-                fetchpriority="high"
+                loading="lazy"
                 width={580}
                 height={326}
                 alt={`Ảnh chân dung của thành viên ${item.name} từ đội ngũ ${SITE_CONFIG.siteName}`}

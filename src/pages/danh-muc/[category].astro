@@ -26,14 +26,14 @@ const { category, posts } = Astro.props;
 
 <Layout title={category.title} description={category.description}>
   <Container>
-    <Pagetitle>
+    <Pagetitle isFullScreen={true}>
       <Fragment slot="title">{category.title}</Fragment>
       <Fragment slot="desc">{category.description}</Fragment>
     </Pagetitle>
     <main id="main-content">
       {posts.length > 0 ? (
         <div class="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
-          {posts.map((post, index) => <Postlist post={post} aspect="square" preloadImage={index < 3} />)}
+          {posts.map((post, index) => <Postlist post={post} aspect="square" preloadImage={false} />)}
         </div>
       ) : (
         <div class="mt-10 text-center text-light-foreground/70">

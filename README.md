@@ -1,9 +1,9 @@
-# Vào Việc - Blog & Website
+# Vock Tech - Blog & Website
 
-Chào mừng đến với mã nguồn của **Vào Việc**, một trang blog chia sẻ kiến thức về lập trình, công nghệ, thiết kế và cuộc sống. 
+Chào mừng đến với mã nguồn của **Vock Tech**, một trang blog chia sẻ kiến thức về lập trình, công nghệ, thiết kế và cuộc sống. 
 Trang web được xây dựng dựa trên Astro, MDX, TailwindCSS và hệ thống quản trị nội dung Keystatic.
 
-🌍 **Live Demo:** [https://vaoviec.pages.dev/](https://vaoviec.pages.dev/)
+🌍 **Live Demo:** [https://vocktech.pages.dev/](https://vocktech.pages.dev/)
 
 ## Tính năng chính
 
@@ -86,8 +86,8 @@ pnpm preview
 
 ```typescript
 export const SITE_CONFIG = {
-  title: "Vào Việc",
-  siteName: "Vào Việc",
+  title: "Vock Tech",
+  siteName: "Vock Tech",
   description: "Website chia sẻ về lập trình, công nghệ, và cuộc sống...",
   // ...
 };
