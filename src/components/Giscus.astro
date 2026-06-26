@@ -3,7 +3,8 @@
 // Bạn cần thay thế các giá trị YOUR_... bằng cấu hình lấy từ https://giscus.app
 ---
 
-<div class="mt-14 pt-8 border-t border-light-surface dark:border-dark-surface w-full">
+<div
+  class="mt-14 pt-8 border-t border-light-surface dark:border-dark-surface w-full">
   <h2
     class="text-2xl font-bold tracking-tight mb-8 text-light-foreground dark:text-dark-foreground">
     Bình luận
@@ -12,7 +13,8 @@
 
   <style is:global>
     /* Đảm bảo iframe và container của giscus luôn tràn viền */
-    .giscus, .giscus-frame {
+    .giscus,
+    .giscus-frame {
       width: 100% !important;
       max-width: 100% !important;
     }
@@ -20,16 +22,20 @@
 
   <script is:inline>
     // Sử dụng theme mặc định của Giscus thay vì file CSS tự tạo
-    // (File CSS tự tạo sẽ bị chặn trên localhost do lỗi Mixed Content, 
+    // (File CSS tự tạo sẽ bị chặn trên localhost do lỗi Mixed Content,
     // và Data URI bị chặn bởi chính sách bảo mật CSP của Giscus.app)
     function getThemeName() {
       const isDark = document.documentElement.classList.contains("dark");
       if (isDark) return "transparent_dark";
-      
+
       // Trên localhost, Giscus sẽ chặn file CSS custom do lỗi Mixed Content (http vs https).
       // Vì vậy ta dùng theme 'light' mặc định khi dev, và dùng custom CSS khi build production.
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      return isLocalhost ? "light" : window.location.origin + "/giscus-light.css";
+      const isLocalhost =
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1";
+      return isLocalhost
+        ? "light"
+        : window.location.origin + "/giscus-light.css";
     }
 
     // Hàm khởi tạo Giscus với theme chuẩn của trang
@@ -38,7 +44,7 @@
 
       const script = document.createElement("script");
       script.src = "https://giscus.app/client.js";
-      script.setAttribute("data-repo", "sangphamv/Vao-Viec");
+      script.setAttribute("data-repo", "sangphamv/VockTech");
       script.setAttribute("data-repo-id", "R_kgDOS9Ezzg");
       script.setAttribute("data-category", "Announcements");
       script.setAttribute("data-category-id", "DIC_kwDOS9Ezzs4C_trU");
@@ -63,13 +69,15 @@
     loadGiscus();
 
     // Lắng nghe sự kiện khi người dùng nhấn đổi giao diện (Light/Dark)
-    let currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+    let currentTheme = document.documentElement.classList.contains("dark")
+      ? "dark"
+      : "light";
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === "class") {
           const isDark = document.documentElement.classList.contains("dark");
           const newTheme = isDark ? "dark" : "light";
-          
+
           if (newTheme !== currentTheme) {
             currentTheme = newTheme;
             const themeName = getThemeName();

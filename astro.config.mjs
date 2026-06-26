@@ -12,16 +12,44 @@ import react from "@astrojs/react";
 import keystatic from "@keystatic/astro";
 
 import { remarkReadingTime } from "./src/utils/all";
+import rehypeComponents from "rehype-components";
+import remarkDirective from "remark-directive";
+import { remarkCustomAdmonitions } from "./src/plugins/remark-custom-admonitions.mjs";
+import { AdmonitionComponent } from "./src/plugins/rehype-component-admonition.mjs";
+import { parseDirectiveNode } from "./src/plugins/remark-directive-rehype.mjs";
+
+const customRemarkPlugins = [
+  remarkReadingTime,
+  remarkCustomAdmonitions,
+  remarkDirective,
+  parseDirectiveNode,
+];
+
+const customRehypePlugins = [
+  [
+    rehypeComponents,
+    {
+      components: {
+        note: (x, y) => AdmonitionComponent(x, y, "note"),
+        tip: (x, y) => AdmonitionComponent(x, y, "tip"),
+        important: (x, y) => AdmonitionComponent(x, y, "important"),
+        caution: (x, y) => AdmonitionComponent(x, y, "caution"),
+        warning: (x, y) => AdmonitionComponent(x, y, "warning"),
+      },
+    },
+  ],
+];
 
 export default defineConfig({
   output: 'static',
-  site: "https://vaoviec.pages.dev/",
+  site: "https://vocktech.pages.dev/",
   build: {
     inlineStylesheets: 'always',
   },
   markdown: {
     processor: unified({
-      remarkPlugins: [remarkReadingTime],
+      remarkPlugins: customRemarkPlugins,
+      rehypePlugins: customRehypePlugins,
     }),
   },
   integrations: [

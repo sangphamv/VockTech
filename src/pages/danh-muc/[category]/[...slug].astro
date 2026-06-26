@@ -341,7 +341,7 @@ const seriesPosts = post.data.series
 
   <style is:global>
     :root {
-      --zoom-bg: #F7F5F0;
+      --zoom-bg: #f7f5f0;
     }
     html.dark {
       --zoom-bg: #161413;
@@ -360,11 +360,7 @@ const seriesPosts = post.data.series
     }
   </style>
 
-  <script
-    is:inline
-    defer
-    src="/medium-zoom.min.js"
-  ></script>
+  <script is:inline defer src="/medium-zoom.min.js"></script>
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const images = document.querySelectorAll(".prose img, .aspect-video img");

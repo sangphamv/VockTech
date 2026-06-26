@@ -1,9 +1,9 @@
 export const SITE_CONFIG = {
   // Tiêu đề mặc định của trang web
-  title: "Vào Việc",
+  title: "Vock Tech",
 
   // Tên thương hiệu / Tên blog (dùng cho copyright, logo alt, v.v.)
-  siteName: "Vào Việc",
+  siteName: "Vock Tech",
 
   // Mô tả mặc định cho SEO
   description: "Website chia sẻ về lập trình, công nghệ, và cuộc sống...",
@@ -21,6 +21,6 @@ export const SITE_CONFIG = {
   // Mạng xã hội / Footer links
   social: {
     github: "https://github.com/sangphamv",
-    website: "https://vaoviec.pages.dev/"
+    website: "https://vocktech.pages.dev/"
   }
 };
