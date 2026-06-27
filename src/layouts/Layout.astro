@@ -34,6 +34,9 @@ const resolvedImage = image ?? ogimage;
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
+    {SITE_CONFIG.analytics?.searchConsole?.enabled && SITE_CONFIG.analytics?.searchConsole?.metaVerification && (
+      <meta name="google-site-verification" content={SITE_CONFIG.analytics.searchConsole.metaVerification} />
+    )}
     <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href={interVietnamese} as="font" type="font/woff2" crossorigin="anonymous" />
     
