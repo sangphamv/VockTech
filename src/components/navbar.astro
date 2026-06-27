@@ -1,7 +1,6 @@
 ---
 import Container from "@/components/container.astro";
 import logoImage from "@/assets/logo.svg";
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import Themeswitch from "@/components/themeswitch.astro";
 import { SITE_CONFIG } from "@/site.config";
@@ -40,11 +39,11 @@ const menuItems: Menu[] = [
     <nav class="relative">
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <a class="w-28" href="/" aria-label="Home">
-            <div 
-              class="w-full h-10 bg-light-accent dark:bg-dark-accent transition-colors" 
-              style={`mask: url(${logoImage.src}) no-repeat left center; -webkit-mask: url(${logoImage.src}) no-repeat left center; mask-size: contain; -webkit-mask-size: contain;`}
-            ></div>
+          <a class="w-36 md:w-40" href="/" aria-label="Home">
+            <div
+              class="w-full h-12 md:h-14 bg-light-accent dark:bg-dark-accent transition-colors"
+              style={`mask: url(${logoImage.src}) no-repeat left center; -webkit-mask: url(${logoImage.src}) no-repeat left center; mask-size: contain; -webkit-mask-size: contain;`}>
+            </div>
             <span class="sr-only">{SITE_CONFIG.siteName}</span>
           </a>
         </div>
@@ -97,7 +96,9 @@ const menuItems: Menu[] = [
         </div>
       </div>
 
-      <div id="mobile-menu" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out md:hidden">
+      <div
+        id="mobile-menu"
+        class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out md:hidden">
         <div class="overflow-hidden">
           <div
             class="flex flex-col items-center justify-start mt-4 w-full border-t border-light-surface dark:border-dark-surface pt-2">
@@ -125,7 +126,7 @@ const menuItems: Menu[] = [
     [...document.querySelectorAll(".navmenu-toggle")].forEach((element) => {
       element.classList.toggle("hidden");
     });
-    
+
     const mobileMenu = document.getElementById("mobile-menu");
     if (mobileMenu) {
       if (mobileMenu.classList.contains("grid-rows-[0fr]")) {

@@ -1,0 +1,23 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Link from "@/components/ui/link.astro";
+---
+
+<Layout title="404 - Không tìm thấy trang" description="Trang bạn đang tìm kiếm không tồn tại.">
+  <Container>
+    <div class="min-h-[85vh] w-full bg-light-background dark:bg-dark-background bg-grid-black/[0.05] dark:bg-grid-white/[0.05] relative flex flex-col items-center justify-center text-center">
+      {/* Radial gradient mask */}
+      <div class="absolute pointer-events-none inset-0 flex items-center justify-center bg-light-background dark:bg-dark-background [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)]"></div>
+      
+      <div class="relative z-20 w-full max-w-4xl mx-auto flex flex-col items-center">
+        <h1 class="text-8xl md:text-[12rem] font-bold text-light-foreground dark:text-dark-foreground mb-8">404</h1>
+        <h2 class="text-3xl md:text-5xl font-semibold mb-10">Trang không tồn tại</h2>
+        <p class="text-light-foreground/70 dark:text-dark-foreground/70 mb-12 max-w-lg mx-auto text-xl md:text-2xl leading-relaxed">
+          Rất tiếc, trang bạn đang tìm kiếm có thể đã bị xóa, đổi tên hoặc tạm thời không thể truy cập.
+        </p>
+        <Link href="/" style="primary">Quay lại Trang Chủ</Link>
+      </div>
+    </div>
+  </Container>
+</Layout>

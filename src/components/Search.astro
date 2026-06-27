@@ -27,6 +27,16 @@
             alt_search: "Không tìm thấy kết quả cho [SEARCH_TERM]. Hiển thị kết quả thay thế cho [DIFFERENT_TERM]",
             search_suggestion: "Không tìm thấy kết quả cho [SEARCH_TERM]. Thử một trong các tìm kiếm sau:",
             searching: "Đang tìm kiếm cho [SEARCH_TERM]..."
+          },
+          processTerm: function (term) {
+            // Chuyển về chữ thường và loại bỏ dấu tiếng Việt
+            return term
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .replace(/đ/g, "d")
+              .replace(/Đ/g, "D")
+              .trim();
           }
         });
       } else {

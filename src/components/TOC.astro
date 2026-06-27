@@ -20,7 +20,7 @@ const { headings, isAccordion = false } = Astro.props;
           "
           class="w-full flex justify-between items-center font-medium text-light-foreground dark:text-dark-foreground cursor-pointer p-5 select-none"
         >
-          <span class="flex items-center gap-2 text-gray-700 dark:text-dark-foreground/70">
+          <span class="flex items-center gap-2 text-light-foreground/70 dark:text-dark-foreground/70">
             <svg
               class="w-5 h-5 text-light-foreground/70 dark:text-dark-foreground/70"
               fill="none"
@@ -73,13 +73,13 @@ const { headings, isAccordion = false } = Astro.props;
       </div>
     ) : (
       <nav class="toc-container">
-        <h3 class="font-medium mb-4 text-gray-700 dark:text-dark-foreground/70 uppercase tracking-wider text-sm">
+        <h3 class="font-medium mb-4 text-light-foreground/70 dark:text-dark-foreground/70 uppercase tracking-wider text-sm">
           Mục lục
         </h3>
         <ul class="space-y-1 text-[13px] text-light-foreground/70 dark:text-dark-foreground/70">
           {headings.map((heading) => (
             <li
-              class={`leading-snug ${heading.depth === 3 ? "ml-4 pl-3 border-l border-light-surface dark:border-dark-surface text-[12px] text-light-foreground/70 dark:text-dark-foreground/70 mt-1" : "text-gray-700 dark:text-dark-foreground/70 mt-2"}`}>
+              class={`leading-snug ${heading.depth === 3 ? "ml-4 pl-3 border-l border-light-surface dark:border-dark-surface text-[12px] text-light-foreground/70 dark:text-dark-foreground/70 mt-1" : "text-light-foreground/70 dark:text-dark-foreground/70 mt-2"}`}>
               <a
                 href={`#${heading.slug}`}
                 class="hover:text-light-accent dark:hover:text-dark-accent dark:hover:text-dark-accent transition-colors block py-1">

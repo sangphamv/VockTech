@@ -23,29 +23,30 @@ const slug = post.id.replace(/\.(md|mdx)$/, "");
 const TitleTag = aspect === "landscape" ? "h2" : "h3";
 ---
 
-<div class="cursor-pointer group relative">
+<div class="relative">
   <div
     class={cx(
-      "relative overflow-hidden transition-all duration-300 bg-light-surface/30 rounded-xl dark:bg-dark-surface group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-light-accent/20 dark:group-hover:shadow-dark-accent/20",
+      "group/image relative overflow-hidden transition-all duration-300 bg-light-surface/30 rounded-xl dark:bg-dark-surface hover:-translate-y-1 hover:shadow-xl hover:shadow-light-accent/20 dark:hover:shadow-dark-accent/20",
       "aspect-video",
     )}>
-    <a href={"/danh-muc/" + post.data.category + "/" + slug}>
+    <a href={"/danh-muc/" + post.data.category + "/" + slug} class="block w-full h-full">
       {
         post.data.image ? (
           <Picture
             src={post.data.image}
-            widths={[400, 800]}
+            widths={[480]}
             sizes="(max-width: 640px) 90vw, 480px"
             formats={["avif"]}
             fallbackFormat="avif"
+            quality={80}
             alt={`Hình ảnh nổi bật cho bài viết: ${post.data.title}`}
             loading={preloadImage ? "eager" : "lazy"}
             fetchpriority={preloadImage ? "high" : "auto"}
-            class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-cover rounded-xl transition-transform duration-500 group-hover/image:scale-105"
           />
         ) : (
-          <span class="absolute w-16 h-16 text-gray-200 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            <Icon class="w-4 h-4 text-black" name="heroicons:photo" />
+          <span class="absolute w-16 h-16 text-light-foreground/20 dark:text-dark-foreground/20 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            <Icon class="w-4 h-4 text-light-foreground/50 dark:text-dark-foreground/50" name="heroicons:photo" />
           </span>
         )
       }
@@ -55,18 +56,16 @@ const TitleTag = aspect === "landscape" ? "h2" : "h3";
   {
     category && (
       <a href={"/danh-muc/" + category.slug}>
-        <Label theme={(["green", "blue", "orange", "purple", "pink"])[
-          Math.abs(category.slug.split('').reduce((a, b) => { a = ((a << 5) - a) + b.charCodeAt(0); return a & a }, 0)) % 5
-        ] as any}>{category.title}</Label>
+        <Label>{category.title}</Label>
       </a>
     )
   }
   <TitleTag
     class="mt-3 text-lg font-semibold tracking-normal text-light-accent dark:text-dark-accent dark:text-dark-foreground">
     <a
-      href={"/danh-muc/" + post.data.category + "/" + slug}>
+      href={"/danh-muc/" + post.data.category + "/" + slug} class="group/title">
       <span
-        class="bg-gradient-to-r from-light-accent/30 to-light-accent/10 dark:from-dark-accent/30 dark:to-dark-accent/10 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px]">
+        class="bg-gradient-to-r from-light-accent/30 to-light-accent/10 dark:from-dark-accent/30 dark:to-dark-accent/10 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-300 group-hover/title:bg-[length:100%_10px]">
         {post.data.title}
       </span>
     </a>
@@ -83,12 +82,12 @@ const TitleTag = aspect === "landscape" ? "h2" : "h3";
   }
 
   <div
-    class="flex items-center mt-5 space-x-3 text-gray-600 dark:text-gray-400 font-medium">
+    class="flex items-center mt-5 space-x-3 text-light-foreground/70 dark:text-dark-foreground/70 font-medium">
     <div class="flex items-center gap-3">
-      <span class="text-sm text-gray-700 dark:text-gray-300">{author.name}</span>
+      <span class="text-sm text-light-foreground/80 dark:text-dark-foreground/80">{author.name}</span>
     </div>
-    <span class="text-xs text-gray-500 dark:text-gray-400"> &bull;</span>
-    <time class="text-sm text-gray-700 dark:text-gray-300" datetime={post.data.publishDate.toISOString()}>
+    <span class="text-xs text-light-foreground/50 dark:text-dark-foreground/50"> &bull;</span>
+    <time class="text-sm text-light-foreground/80 dark:text-dark-foreground/80" datetime={post.data.publishDate.toISOString()}>
       {getFormattedDate(post.data.publishDate)}
     </time>
   </div>

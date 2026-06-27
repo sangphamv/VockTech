@@ -1,8 +1,9 @@
 ---
-// Component hiển thị bình luận Giscus
-// Bạn cần thay thế các giá trị YOUR_... bằng cấu hình lấy từ https://giscus.app
+import { SITE_CONFIG } from "../site.config";
+const giscusConfig = SITE_CONFIG.giscus;
 ---
 
+{giscusConfig.enabled && (
 <div
   class="mt-14 pt-8 border-t border-light-surface dark:border-dark-surface w-full">
   <h2
@@ -20,7 +21,7 @@
     }
   </style>
 
-  <script is:inline>
+  <script is:inline define:vars={{ giscusConfig }}>
     // Sử dụng theme mặc định của Giscus thay vì file CSS tự tạo
     // (File CSS tự tạo sẽ bị chặn trên localhost do lỗi Mixed Content,
     // và Data URI bị chặn bởi chính sách bảo mật CSP của Giscus.app)
@@ -44,18 +45,18 @@
 
       const script = document.createElement("script");
       script.src = "https://giscus.app/client.js";
-      script.setAttribute("data-repo", "sangphamv/VockTech");
-      script.setAttribute("data-repo-id", "R_kgDOS9Ezzg");
-      script.setAttribute("data-category", "Announcements");
-      script.setAttribute("data-category-id", "DIC_kwDOS9Ezzs4C_trU");
-      script.setAttribute("data-mapping", "pathname");
-      script.setAttribute("data-strict", "0");
-      script.setAttribute("data-reactions-enabled", "1");
-      script.setAttribute("data-emit-metadata", "0");
-      script.setAttribute("data-input-position", "bottom");
+      script.setAttribute("data-repo", giscusConfig.repo);
+      script.setAttribute("data-repo-id", giscusConfig.repoId);
+      script.setAttribute("data-category", giscusConfig.category);
+      script.setAttribute("data-category-id", giscusConfig.categoryId);
+      script.setAttribute("data-mapping", giscusConfig.mapping);
+      script.setAttribute("data-strict", giscusConfig.strict);
+      script.setAttribute("data-reactions-enabled", giscusConfig.reactionsEnabled);
+      script.setAttribute("data-emit-metadata", giscusConfig.emitMetadata);
+      script.setAttribute("data-input-position", giscusConfig.inputPosition);
       script.setAttribute("data-theme", themeName);
-      script.setAttribute("data-lang", "vi"); // Chuyển sang tiếng Việt
-      script.setAttribute("data-loading", "lazy");
+      script.setAttribute("data-lang", giscusConfig.lang);
+      script.setAttribute("data-loading", giscusConfig.loading);
       script.setAttribute("crossorigin", "anonymous");
       script.async = true;
 
@@ -101,3 +102,4 @@
     });
   </script>
 </div>
+)}

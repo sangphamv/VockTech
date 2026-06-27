@@ -59,17 +59,7 @@ export default config({
       format: { data: 'json' },
       schema: {
         title: fields.slug({ name: { label: 'Title - Tiêu đề' } }),
-        color: fields.select({
-          label: 'Color - Màu sắc',
-          options: [
-            { label: 'Green - Xanh lá', value: 'green' },
-            { label: 'Blue - Xanh dương', value: 'blue' },
-            { label: 'Orange - Cam', value: 'orange' },
-            { label: 'Purple - Tím', value: 'purple' },
-            { label: 'Pink - Hồng', value: 'pink' },
-          ],
-          defaultValue: 'blue',
-        }),
+
         description: fields.text({ label: 'Description - Mô tả', multiline: true }),
       },
     }),

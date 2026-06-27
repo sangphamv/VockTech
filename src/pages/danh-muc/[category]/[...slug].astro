@@ -185,17 +185,17 @@ const seriesPosts = post.data.series
       post.data.image && (
         <Picture
           src={post.data.image}
-          widths={[800, 1200]}
-          sizes="(max-width: 800px) 100vw, 1200px"
+          widths={[768, 1024]}
+          sizes="(max-width: 800px) 100vw, 1024px"
           width={1024}
           height={576}
           formats={["avif"]}
           fallbackFormat="avif"
+          quality={80}
           alt={post.data.title}
           loading="eager"
           fetchpriority="high"
           class="w-full h-full object-cover"
-          data-zoom-src={post.data.image.src}
         />
       )
     }
@@ -234,7 +234,7 @@ const seriesPosts = post.data.series
                   this.querySelector('.arrow-icon').classList.toggle('rotate-180');
                 "
                   class="w-full flex justify-between items-center font-medium text-light-foreground dark:text-dark-foreground cursor-pointer p-5">
-                  <span class="flex items-center gap-2 text-gray-700 dark:text-dark-foreground/70">
+                  <span class="flex items-center gap-2 text-light-foreground/70 dark:text-dark-foreground/70">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 text-light-foreground/70 dark:text-dark-foreground/70"
@@ -342,37 +342,8 @@ const seriesPosts = post.data.series
     )
   }
 
-  <style is:global>
-    :root {
-      --zoom-bg: #f7f5f0;
-    }
-    html.dark {
-      --zoom-bg: #161413;
-    }
-    .medium-zoom-overlay {
-      z-index: 100 !important;
-    }
-    .medium-zoom-image {
-      transition:
-        transform 0.3s cubic-bezier(0.2, 0, 0.2, 1),
-        border-radius 0.3s cubic-bezier(0.2, 0, 0.2, 1) !important;
-    }
-    .medium-zoom-image--opened {
-      z-index: 101 !important;
-      border-radius: 0 !important;
-    }
-  </style>
-
-  <script is:inline defer src="/medium-zoom.min.js"></script>
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
-      const images = document.querySelectorAll(".prose img, .aspect-video img");
-      if (images.length > 0) {
-        mediumZoom(images, {
-          margin: 24,
-          background: "var(--zoom-bg)",
-        });
-      }
       // Reading Progress Bar
       const progressBar = document.getElementById('progress-bar');
       if (progressBar) {
