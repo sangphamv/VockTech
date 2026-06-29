@@ -34,7 +34,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-const { Content, headings } = await render(post);
+const { Content, headings, remarkPluginFrontmatter } = await render(post);
 
 const author = authors.find((item) => item.slug === post.data.author) as Author;
 const allCategories = await getCollection("categories");
@@ -61,7 +61,11 @@ const seriesPosts = post.data.series
   title={post.data.title}
   description={post.data.excerpt}
   image={post.data.image.src}
-  articleDate={post.data.publishDate}>
+  articleDate={post.data.publishDate}
+  updatedDate={post.data.updatedDate}
+  authorName={author.name}
+  keywords={post.data.tags}
+  faqs={remarkPluginFrontmatter.faqs}>
   
   <!-- Reading Progress Bar -->
   <div id="progress-bar" class="fixed top-0 left-0 h-1.5 bg-light-accent dark:bg-dark-accent z-[100] transition-all duration-150" style="width: 0%"></div>
@@ -222,7 +226,7 @@ const seriesPosts = post.data.series
         }
 
         <div
-          class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-a:text-light-accent hover:prose-a:text-light-accent/80 dark:prose-a:text-dark-accent dark:hover:prose-a:text-dark-accent/80 prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-[70ch]">
+          class="mx-auto my-6 prose md:prose-lg dark:prose-invert prose-headings:font-bold prose-img:rounded-xl prose-img:shadow-md prose-img:aspect-video prose-img:w-full prose-img:object-cover prose-img:mx-auto w-full max-w-[70ch]">
           {
             seriesPosts.length > 0 && (
               <div class="bg-transparent dark:bg-dark-surface/50 border border-light-surface dark:border-dark-surface rounded-xl mb-8 not-prose overflow-hidden">

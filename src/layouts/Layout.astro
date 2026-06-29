@@ -11,13 +11,17 @@ export interface Props {
   description?: string;
   image?: string;
   articleDate?: string | Date;
+  updatedDate?: string | Date;
+  authorName?: string;
+  keywords?: string[];
+  faqs?: { question: string; answer: string }[];
 
   // Backwards compatibility (existing pages)
   desc?: string;
   ogimage?: string;
 }
 
-const { title, description, image, articleDate, desc, ogimage } = Astro.props;
+const { title, description, image, articleDate, updatedDate, authorName, keywords, faqs, desc, ogimage } = Astro.props;
 
 const resolvedDescription = description ?? desc;
 const resolvedImage = image ?? ogimage;
@@ -68,6 +72,10 @@ const resolvedImage = image ?? ogimage;
       description={resolvedDescription}
       image={resolvedImage}
       articleDate={articleDate}
+      updatedDate={updatedDate}
+      authorName={authorName}
+      keywords={keywords}
+      faqs={faqs}
     />
     <script is:inline>
       const getTheme = () => {
@@ -91,7 +99,7 @@ const resolvedImage = image ?? ogimage;
       }
     </script>
   </head>
-  <body class="antialiased text-light-foreground bg-light-background dark:bg-dark-background dark:text-dark-foreground/70">
+  <body class="antialiased text-light-foreground bg-light-background dark:bg-dark-background dark:text-dark-foreground/70 selection:bg-light-accent/20 selection:text-light-foreground dark:selection:bg-dark-accent/20 dark:selection:text-dark-foreground">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-[100] px-4 py-2 bg-light-accent dark:bg-dark-accent text-white text-[19px] dark:text-dark-background font-bold rounded-md">Chuyển đến nội dung chính</a>
     <Navbar />
     <slot />

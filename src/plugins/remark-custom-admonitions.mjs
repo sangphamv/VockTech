@@ -9,7 +9,7 @@
 import { visit } from "unist-util-visit";
 
 export function remarkCustomAdmonitions() {
-  return (tree) => {
+  return (tree, file) => {
     visit(tree, "blockquote", (node) => {
       const firstChild = node.children[0];
       if (!firstChild || firstChild.type !== "paragraph") return;
@@ -20,30 +20,54 @@ export function remarkCustomAdmonitions() {
       const firstLine = lines[0];
 
       // Logic cho FAQ (Q & A)
-      if (firstTextNode.value.includes("[!Q]")) {
+      if (firstTextNode.value.includes("[!F]")) {
         let qNodes = [];
         let aNodes = [];
         let foundA = false;
+        
+        let qTextString = "";
+        let aTextString = "";
 
         for (const child of firstChild.children) {
           if (child.type === 'text' && !foundA) {
-            const aIndex = child.value.indexOf('[!A]');
+            const aIndex = child.value.indexOf('[!Q]');
             if (aIndex !== -1) {
               foundA = true;
-              const qText = child.value.substring(0, aIndex).replace(/\[!Q\]\s*/, '').trim();
-              if (qText) qNodes.push({ type: 'text', value: qText });
+              const qText = child.value.substring(0, aIndex).replace(/\[!F\]\s*/, '').trim();
+              if (qText) {
+                qNodes.push({ type: 'text', value: qText });
+                qTextString += qText;
+              }
               
               const aText = child.value.substring(aIndex + 4).trim();
-              if (aText) aNodes.push({ type: 'text', value: aText });
+              if (aText) {
+                aNodes.push({ type: 'text', value: aText });
+                aTextString += aText;
+              }
             } else {
-              const qText = child.value.replace(/\[!Q\]\s*/, '');
-              if (qText) qNodes.push({ ...child, value: qText });
+              const qText = child.value.replace(/\[!F\]\s*/, '');
+              if (qText) {
+                qNodes.push({ ...child, value: qText });
+                qTextString += qText;
+              }
             }
           } else if (!foundA) {
             qNodes.push(child);
+            if (child.type === 'text' || child.value) qTextString += (child.value || '');
           } else {
             aNodes.push(child);
+            if (child.type === 'text' || child.value) aTextString += (child.value || '');
           }
+        }
+        
+        if (file && file.data && file.data.astro && file.data.astro.frontmatter) {
+          if (!file.data.astro.frontmatter.faqs) {
+            file.data.astro.frontmatter.faqs = [];
+          }
+          file.data.astro.frontmatter.faqs.push({
+            question: qTextString.trim(),
+            answer: aTextString.trim()
+          });
         }
 
         node.type = 'faqContainer';

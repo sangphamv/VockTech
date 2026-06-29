@@ -45,6 +45,63 @@ module.exports = {
         "2/3": "2 / 3",
         "9/16": "9 / 16",
       },
+      typography: (theme) => ({
+        DEFAULT: {
+          css: {
+            '--tw-prose-body': theme('colors.light.foreground'),
+            '--tw-prose-headings': theme('colors.light.foreground'),
+            '--tw-prose-links': theme('colors.light.accent'),
+            '--tw-prose-bold': theme('colors.light.foreground'),
+            '--tw-prose-quotes': theme('colors.light.foreground'),
+            '--tw-prose-quote-borders': theme('colors.light.surface'),
+            '--tw-prose-code': theme('colors.light.foreground'),
+            '--tw-prose-hr': theme('colors.light.surface'),
+            '--tw-prose-th-borders': theme('colors.light.surface'),
+            '--tw-prose-td-borders': theme('colors.light.surface'),
+            a: {
+              color: theme('colors.light.accent'),
+              textDecoration: 'none',
+              fontWeight: '500',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            },
+            blockquote: {
+              borderLeftWidth: '2px',
+              fontStyle: 'normal',
+              color: 'inherit',
+            },
+            code: {
+              fontWeight: '400',
+              backgroundColor: 'rgba(0,0,0,0.05)',
+              padding: '0.2em 0.4em',
+              borderRadius: '0.25rem',
+            },
+            'code::before': { content: 'none' },
+            'code::after': { content: 'none' },
+          },
+        },
+        invert: {
+          css: {
+            '--tw-prose-body': 'rgba(230, 223, 211, 0.7)',
+            '--tw-prose-headings': theme('colors.dark.foreground'),
+            '--tw-prose-links': theme('colors.dark.accent'),
+            '--tw-prose-bold': theme('colors.dark.foreground'),
+            '--tw-prose-quotes': theme('colors.dark.foreground'),
+            '--tw-prose-quote-borders': theme('colors.dark.surface'),
+            '--tw-prose-code': theme('colors.dark.foreground'),
+            '--tw-prose-hr': theme('colors.dark.surface'),
+            '--tw-prose-th-borders': theme('colors.dark.surface'),
+            '--tw-prose-td-borders': theme('colors.dark.surface'),
+            a: {
+              color: theme('colors.dark.accent'),
+            },
+            code: {
+              backgroundColor: 'rgba(255,255,255,0.1)',
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [
